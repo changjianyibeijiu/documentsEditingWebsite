@@ -1,0 +1,98 @@
+.bgcolor {
+  background-color: #fff;
+}
+
+.headerBox {
+  .bgcolor();
+  box-shadow: 0 2px 4px 0 rgba(98, 107, 132, .15);
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  min-width:1000px;
+
+
+  .header {
+    .bgcolor();
+    margin: 0 20px;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+
+    .yunLogo {
+      max-height: 100%;
+
+      img {
+        height: 2.5rem;
+        width: auto;
+
+      }
+    }
+
+    .yunName {
+      font-size: 1.5rem;
+      line-height: 2.5rem;
+
+    }
+
+    .search {
+      width: 20rem;
+      margin-left: 20px;
+      flex-grow: 1;
+      margin: 0px 100px 0px 50px;
+      max-width: 900px;
+    }
+    .user{
+      position: absolute;
+      right: 20px;
+      // .avatar {
+      //   position: absolute;
+      //   right: 20px;
+      // }
+      .userCard {
+        position: absolute;
+        top: 2.7rem;
+        right: 1rem;
+        z-index: 999;
+        box-shadow: 0 2px 4px 0 rgba(98, 107, 132, .15);
+        background-color: #fff;
+        min-width: 10rem;
+
+      }
+    }
+   
+
+  }
+
+}
+
+.main {
+  margin-top: 2.7rem;
+  height: 100vh-5rem;
+
+  .sider {
+    box-shadow: 0 2px 4px 0 rgba(98, 107, 132, .15);
+  //   .menu:hover{
+  //     background-color:#cccccc;
+  // }
+    .newDoc {
+      margin: 5px 10px;
+      position: relative;
+
+      .newCreate {
+        position: absolute;
+        top: 2.2rem;
+        z-index: 999;
+        box-shadow: 0 2px 4px 0 rgba(98, 107, 132, .15);
+        background-color: #fff;
+        min-width: 25rem;
+
+      }
+    }
+  }
+
+  .content {
+    padding: 20px 20px;
+    background-color: #fff;
+  }
+}
