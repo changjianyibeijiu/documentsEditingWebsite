@@ -151,8 +151,7 @@ class FolderController extends Controller {
           ctx.body = json;
           break;
 
-        } 
-        else {
+        } else {
           ctx.body = {
             code: "200",
             message: "无此文件夹",

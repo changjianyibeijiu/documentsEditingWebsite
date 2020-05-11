@@ -3,7 +3,7 @@ import { List, Card, Avatar, Modal, Button, Input } from 'antd';
 import styles from './index.less';
 
 import request from '@/utils/request';
-import {history} from 'umi';
+import { history } from 'umi';
 
 import {
   FileWordFilled,
@@ -17,29 +17,17 @@ import {
 
 import { Link } from 'umi';
 
-
-
 export default class index extends Component {
-
   constructor(props) {
     super(props);
-    this.state = { visible: false,
-      folderName:'',
-      share:false
-    };
-
-  
+    this.state = { visible: false, folderName: '', share: false };
   }
 
+  createFolder = share => {
+    this.setState({ visible: true });
 
-  createFolder=(share)=> {
-
-    
-    this.setState({visible: true});
-
-    this.setState({share:share})
-
-  }
+    this.setState({ share: share });
+  };
 
   handleOk = e => {
     // console.log(e);
@@ -47,18 +35,20 @@ export default class index extends Component {
       visible: false,
     });
     this.props.closeNewCreate();
-    console.log("关闭")
-    request.post('/folder',{share:this.state.share,folder:this.state.folderName,createTime:new Date(),editTime: Date.now()});
-    setTimeout(()=>{
-      if(this.state.share){
+    console.log('关闭');
+    request.post('/folder', {
+      share: this.state.share,
+      folder: this.state.folderName,
+      createTime: new Date(),
+      editTime: Date.now(),
+    });
+    setTimeout(() => {
+      if (this.state.share) {
         history.push('/share');
-      }
-      else{
+      } else {
         history.push('/myDoc');
-  
       }
-    },1100);
-    
+    }, 1100);
   };
 
   handleCancel = e => {
@@ -67,15 +57,14 @@ export default class index extends Component {
       visible: false,
     });
     this.props.closeNewCreate();
-
   };
 
-  inputChange=(e)=>{
-    console.log("input change");
+  inputChange = e => {
+    console.log('input change');
     console.log(e.target.value);
-    this.setState({folderName:e.target.value});
+    this.setState({ folderName: e.target.value });
     // console.log(this.state.folderName);
-  }
+  };
 
   render() {
     const data1 = [
@@ -127,8 +116,13 @@ export default class index extends Component {
       },
     ];
     return (
-      <div className={styles.list} onClick={(e)=>{e.stopPropagation();}}>
-          <Modal
+      <div
+        className={styles.list}
+        onClick={e => {
+          e.stopPropagation();
+        }}
+      >
+        <Modal
           title="新建文件夹"
           visible={this.state.visible}
           // visible={true}
@@ -139,7 +133,7 @@ export default class index extends Component {
           okText="确认"
         >
           <p>文件夹名</p>
-          <Input placeholder="请输入文件夹名" onChange={this.inputChange}/>
+          <Input placeholder="请输入文件夹名" onChange={this.inputChange} />
         </Modal>
         <List
           grid={{
@@ -220,7 +214,6 @@ export default class index extends Component {
             </List.Item>
           )}
         />
-      
       </div>
     );
   }

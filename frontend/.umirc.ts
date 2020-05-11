@@ -94,6 +94,8 @@ export default defineConfig({
 
                 { path: '/find', component: '@/pages/find/index' },
 
+
+
                 { path: '/recycleBin', component: '@/pages/recycleBin/index' },
               ],
             },

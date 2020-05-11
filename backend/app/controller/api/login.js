@@ -5,7 +5,9 @@ const JWT = require("jsonwebtoken");
 
 class LoginController extends Controller {
   async index() {
-    const { ctx } = this;
+    const {
+      ctx
+    } = this;
     const user = ctx.request.body.values.user;
     const password = ctx.request.body.values.password;
 
@@ -16,15 +18,13 @@ class LoginController extends Controller {
       }).then((person) => {
         if (person !== null) {
           if (password == person.password) {
-            const token = JWT.sign(
-              {
+            const token = JWT.sign({
                 userId: person._id,
                 userName: person.userName,
                 userEmail: person.userEmail,
                 role: person.role,
               },
-              this.config.jwt.secret,
-              {
+              this.config.jwt.secret, {
                 expiresIn: 3 * 24 * 60 * 60,
               }
             );
@@ -66,16 +66,14 @@ class LoginController extends Controller {
         userName: user,
       }).then((person) => {
         if (person !== null) {
-          if (password== person.password) {
-            const token = JWT.sign(
-              {
+          if (password == person.password) {
+            const token = JWT.sign({
                 userId: person._id,
                 userName: person.userName,
                 userEmail: person.userEmail,
                 role: person.role,
               },
-              this.config.jwt.secret,
-              {
+              this.config.jwt.secret, {
                 expiresIn: 3 * 24 * 60 * 60,
               }
             );

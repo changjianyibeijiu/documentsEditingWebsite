@@ -1,7 +1,8 @@
-html,body{
-    padding: 0;
-    margin: 0;
-    min-width:1000px;
+html,
+body {
+  padding: 0;
+  margin: 0;
+  min-width: 1000px;
 
-    width:expression_r(document.body.clientWidth < 1000 ? "1000px": "auto" );
-  }
+  width: expression_r(document.body.clientWidth < 1000 ? "1000px": "auto");
+}

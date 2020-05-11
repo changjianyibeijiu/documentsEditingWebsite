@@ -41,13 +41,32 @@ export default class InfiniteListExample extends React.Component {
         }, 1);
       });
   }
-  edit(id, type) {
+  edit(id, type,folderId) {
     if (type == 'word') {
-      history.push(`/edit/word/${id}`);
+      if(folderId){
+        history.push(`/edit/word/${folderId}/${id}`)
+      }
+      else{
+        history.push(`/edit/word/${id}`);
+
+      }
     } else if (type == 'mind') {
-      history.push(`/edit/mind/${id}`);
+
+      if(folderId){
+        history.push(`/edit/mind/${folderId}/${id}`)
+      }
+      else{
+
+        history.push(`/edit/mind/${id}`);
+      }
     } else if (type == 'md') {
-      history.push(`/edit/md/${id}`);
+      if(folderId){
+        history.push(`/edit/md/${folderId}/${id}`)
+      }
+      else{
+
+        history.push(`/edit/md/${id}`);
+      }
     }
   }
   delete(id, folderId) {
@@ -123,7 +142,7 @@ export default class InfiniteListExample extends React.Component {
                         className={styles.option}
                         key="option"
                         onClick={() => {
-                          this.edit(item.id, item.type);
+                          this.edit(item.id, item.type,item.folderId);
                         }}
                       >
                         {item.name}
@@ -147,7 +166,7 @@ export default class InfiniteListExample extends React.Component {
                           this.unshare(item.id, item.folderId);
                         }}
                       >
-                        已分享
+                        {/* 已分享 */}
                       </span>
                     ) : (
                       <span
@@ -157,7 +176,7 @@ export default class InfiniteListExample extends React.Component {
                           this.share(item.id, item.folderId);
                         }}
                       >
-                        分享
+                        {/* 分享 */}
                       </span>
                     )}
                     <span
@@ -172,7 +191,7 @@ export default class InfiniteListExample extends React.Component {
                     <span
                       key="option3"
                       onClick={() => {
-                        this.edit(item.id, item.type);
+                        this.edit(item.id, item.type,item.folderId);
                       }}
                     >
                       编辑
@@ -188,7 +207,7 @@ export default class InfiniteListExample extends React.Component {
                           this.unshare(item.id, item.folderId);
                         }}
                       >
-                        已分享
+                        {/* 已分享 */}
                       </span>
                     ) : (
                       <span
@@ -198,7 +217,7 @@ export default class InfiniteListExample extends React.Component {
                           this.share(item.id, item.folderId);
                         }}
                       >
-                        分享
+                        {/* 分享 */}
                       </span>
                     )}
                     <span

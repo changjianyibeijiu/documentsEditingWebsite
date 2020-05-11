@@ -27,7 +27,7 @@ class UserCenterController extends Controller {
         // 定义文件名
         const filename = Date.now() + path.extname(stream.filename).toLocaleLowerCase();
         // 目标文件
-        const target = path.join(`app/public/${user}`, filename);
+        const target = path.join(`../../www/public/${user}`, filename);
         //
         console.log(target);
         createfile(target);
@@ -42,7 +42,7 @@ class UserCenterController extends Controller {
             console.log("写入成功")
 
             await this.ctx.model.User.findByIdAndUpdate(userId, {
-                avatar: `http://127.0.0.1:7001/public/${user}/${filename}`
+                avatar: `http://www.xiaomili.plus/public/${user}/${filename}`
             }, function (err, res) {
                 if (err) {
                     console.log("Error:" + err);
@@ -75,88 +75,107 @@ class UserCenterController extends Controller {
     }
 
     async upUserInfo() {
-        const { ctx } = this;
+        const {
+            ctx
+        } = this;
         const data = ctx.request.body;
         console.log(data);
         const token = this.ctx.request.header.authorization;
         const userId = tokenparse(token, this.ctx.app.config.jwt.secret);
         // console.log(id);
-       if(data.userName&&data.userEmail){
+        if (data.userName && data.userEmail) {
 
 
-        await ctx.model.User.findOne({ userEmail: ctx.request.body.userEmail }).then(async person => {
-            // console.log(person);
-            if (person) {
-              const json = {code:'200',data:{ status: "9002", message: 'email已注册' }};
-              ctx.body = json;
-            //   console.log('邮箱已被注册');
-            } else {
-              await ctx.model.User.findOne({ userName: ctx.request.body.userName }).then(async person => {
+            await ctx.model.User.findOne({
+                userEmail: ctx.request.body.userEmail
+            }).then(async person => {
                 // console.log(person);
                 if (person) {
-                  ctx.body = {code:'200', data:{status: '9001', message: '用户名已注册' }};
-                //   console.log('用户名已被注册');
+                    const json = {
+                        code: '200',
+                        data: {
+                            status: "9002",
+                            message: 'email已注册'
+                        }
+                    };
+                    ctx.body = json;
+                    //   console.log('邮箱已被注册');
                 } else {
-                  
-                    await this.ctx.model.User.findByIdAndUpdate(userId, {
-                        userName: data.userName,
-                        userEmail:data.userEmail,
-                    }, function (err, res) {
-                        if (err) {
-                            console.log("Error:" + err);
+                    await ctx.model.User.findOne({
+                        userName: ctx.request.body.userName
+                    }).then(async person => {
+                        // console.log(person);
+                        if (person) {
                             ctx.body = {
                                 code: '200',
                                 data: {
-                                    status:'6001',
-                                    messege: "更新失败"
+                                    status: '9001',
+                                    message: '用户名已注册'
                                 }
-                            }
+                            };
+                            //   console.log('用户名已被注册');
                         } else {
-                            console.log("Res:" + res);
-                            ctx.body = {
-                                code: '200',
-                                data: {
-                                    status:'6000',
-                                    messege: "更新成功"
+
+                            await this.ctx.model.User.findByIdAndUpdate(userId, {
+                                userName: data.userName,
+                                userEmail: data.userEmail,
+                            }, function (err, res) {
+                                if (err) {
+                                    console.log("Error:" + err);
+                                    ctx.body = {
+                                        code: '200',
+                                        data: {
+                                            status: '6001',
+                                            messege: "更新失败"
+                                        }
+                                    }
+                                } else {
+                                    console.log("Res:" + res);
+                                    ctx.body = {
+                                        code: '200',
+                                        data: {
+                                            status: '6000',
+                                            messege: "更新成功"
+                                        }
+                                    }
+
                                 }
-                            }
-            
+                            });
+
+
                         }
                     });
-                 
-      
-                }
-              });
-      
-      
-            }
-          });
 
-       
-       }
-       else{
-        ctx.body = {
-            code: '200',
-            data: {
-                status:'6002',
-                messege: "请输入正确用户名和邮箱"
+
+                }
+            });
+
+
+        } else {
+            ctx.body = {
+                code: '200',
+                data: {
+                    status: '6002',
+                    messege: "请输入正确用户名和邮箱"
+                }
             }
         }
-       }
-
-        
-      }
 
 
+    }
 
-      async upUserPassword() {
-        const { ctx } = this;
+
+
+    async upUserPassword() {
+        const {
+            ctx
+        } = this;
         const data = ctx.request.body;
         console.log(data);
         const token = this.ctx.request.header.authorization;
         const userId = tokenparse(token, this.ctx.app.config.jwt.secret);
         // console.log(id);
-        if(data.password.length>=6){
+        if (data.password.length >= 6) {
             await this.ctx.model.User.findByIdAndUpdate(userId, {
                 password: data.password
             }, function (err, res) {
@@ -165,7 +184,7 @@ class UserCenterController extends Controller {
                     ctx.body = {
                         code: '200',
                         data: {
-                            status:'6004',
+                            status: '6004',
                             messege: "更新失败"
                         }
                     }
@@ -174,26 +193,25 @@ class UserCenterController extends Controller {
                     ctx.body = {
                         code: '200',
                         data: {
-                            status:'6003',
+                            status: '6003',
                             messege: "更新成功"
                         }
                     }
-    
+
                 }
             });
-        }
-        else{
+        } else {
             ctx.body = {
                 code: '200',
                 data: {
-                    status:'6005',
+                    status: '6005',
                     messege: "请输入6位或以上密码"
                 }
             }
         }
-     
 
-      }
+
+    }
 
 
 }

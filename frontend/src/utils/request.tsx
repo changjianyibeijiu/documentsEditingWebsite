@@ -11,8 +11,8 @@ const { confirm } = Modal;
 
 //创建请求实例
 const service = axios.create({
-  baseURL: 'http://127.0.0.1:7001/api/',
-  timeout: 5000,
+  baseURL: '/api/',
+  timeout: 25000,
 });
 
 const openNotificationWithIcon = (type, message) => {
@@ -24,7 +24,7 @@ const openNotificationWithIcon = (type, message) => {
 function showConfirm() {
   confirm({
     title: '用户身份以过期，请重新登陆！',
-    icon: <ExclamationCircleOutlined/>,
+    icon: <ExclamationCircleOutlined />,
     onOk() {
       reMoveToken();
       history.push('/account/login');
@@ -58,16 +58,16 @@ service.interceptors.response.use(
           // openNotificationWithIcon('error', '请登陆账号！');
           break;
         case '7000':
-          showConfirm()
+          showConfirm();
           break;
         case '7001':
-          showConfirm()
+          showConfirm();
           break;
         case '7002':
-          showConfirm()
+          showConfirm();
           break;
         case '7003':
-          showConfirm()
+          showConfirm();
           break;
       }
       return response;

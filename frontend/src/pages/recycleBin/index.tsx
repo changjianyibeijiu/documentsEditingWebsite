@@ -1,54 +1,50 @@
-
-
 import { List, message, Avatar, Spin } from 'antd';
 // import reqwest from 'reqwest';
 
 import InfiniteScroll from 'react-infinite-scroller';
 
-
 import request from '@/utils/request';
 
 import styles from './index.less';
 
-import {history} from 'umi';
+import { history } from 'umi';
 
 export default class InfiniteListExample extends React.Component {
   state = {
     data: [],
     loading: false,
     hasMore: true,
-    time:1,
+    time: 1,
   };
 
-  restore(id,folderId) {
-    request.post(`/restore`, { data: { id: id,folderId: folderId } }).then(
-      (response)=>{
-        if(response.data.status=='ok'){
+  restore(id, folderId) {
+    request
+      .post(`/restore`, { data: { id: id, folderId: folderId } })
+      .then(response => {
+        if (response.data.status == 'ok') {
           message.success('已还原');
-
         }
         this.fetchData(res => {
           this.setState({
             data: res.data.data,
           });
-        },1);
-      }
-    );
+        }, 1);
+      });
   }
 
-  rm(id,folderId) {
-    request.post('/rm', { data: {id: id,folderId:folderId } }).then(
-      (response)=>{
-        if(response.data.status=='ok'){
+  rm(id, folderId) {
+    request
+      .post('/rm', { data: { id: id, folderId: folderId } })
+      .then(response => {
+        if (response.data.status == 'ok') {
           message.success('已删除');
         }
         this.fetchData(res => {
           this.setState({
             data: res.data.data,
           });
-        },1);
-      }
-    );
+        }, 1);
+      });
   }
 
   componentDidMount() {
@@ -56,13 +52,12 @@ export default class InfiniteListExample extends React.Component {
       this.setState({
         data: res.data.data,
       });
-    },this.state.time);
+    }, this.state.time);
   }
 
-  fetchData = (callback,time) => {
-   
-    request.get("/recycleBinList?results=20&time="+time).then(callback);
-    this.setState({time:++this.state.time});
+  fetchData = (callback, time) => {
+    request.get('/recycleBinList?results=20&time=' + time).then(callback);
+    this.setState({ time: ++this.state.time });
   };
 
   handleInfiniteOnLoad = () => {
@@ -84,7 +79,7 @@ export default class InfiniteListExample extends React.Component {
         data,
         loading: false,
       });
-    },this.state.time);
+    }, this.state.time);
   };
 
   render() {
@@ -102,14 +97,29 @@ export default class InfiniteListExample extends React.Component {
             renderItem={item => (
               <List.Item key={item.id} className={styles.list}>
                 <List.Item.Meta
-                  avatar={
-                    <Avatar src={item.icon} />
-                  }
+                  avatar={<Avatar src={item.icon} />}
                   title={<div>{item.name}</div>}
-                  description={'创建时间：'+item.createTime}
+                  description={'创建时间：' + item.createTime}
                 />
-                <div className={styles.optionBox}><span className={styles.option} key="option1" onClick={() => { this.restore(item.id,item.folderId) }}>还原</span><span key="option2" onClick={() => { this.rm(item.id,item.folderId) }}>删除</span></div>
-                
+                <div className={styles.optionBox}>
+                  <span
+                    className={styles.option}
+                    key="option1"
+                    onClick={() => {
+                      this.restore(item.id, item.folderId);
+                    }}
+                  >
+                    还原
+                  </span>
+                  <span
+                    key="option2"
+                    onClick={() => {
+                      this.rm(item.id, item.folderId);
+                    }}
+                  >
+                    删除
+                  </span>
+                </div>
               </List.Item>
             )}
           >

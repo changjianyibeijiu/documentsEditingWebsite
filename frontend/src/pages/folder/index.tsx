@@ -141,8 +141,6 @@ export default class InfiniteListExample extends React.Component {
       });
   };
 
-
-
   handleCancel = e => {
     console.log(e);
     this.setState({
@@ -191,10 +189,13 @@ export default class InfiniteListExample extends React.Component {
             </Radio.Group>
           </div>
         </Modal>
-        {this.props.match.params.folder?<div></div>:<div className={styles.createFile} onClick={this.createFile}>
-          添加文件
-        </div>}
-        
+        {this.props.match.params.folder ? (
+          <div></div>
+        ) : (
+          <div className={styles.createFile} onClick={this.createFile}>
+            添加文件
+          </div>
+        )}
 
         <InfiniteScroll
           initialLoad={false}
@@ -211,18 +212,20 @@ export default class InfiniteListExample extends React.Component {
                   avatar={<Avatar src={item.icon} />}
                   // title={<a href={}>{item.name}</a>}
                   title={
-
-                    this.props.match.params.folder?<span
-                    className={styles.option}
-                    key="option"
-                    onClick={() => {
-                      // this.preview(this.state.folderId, item.id, item.type);
-                      history.push('/preview/'+this.state.folderId+'/'+item.id);
-                    }}
-                  >
-                    {item.name}
-                  </span>:
-                    item.type ? (
+                    this.props.match.params.folder ? (
+                      <span
+                        className={styles.option}
+                        key="option"
+                        onClick={() => {
+                          // this.preview(this.state.folderId, item.id, item.type);
+                          history.push(
+                            '/preview/' + this.state.folderId + '/' + item.id,
+                          );
+                        }}
+                      >
+                        {item.name}
+                      </span>
+                    ) : item.type ? (
                       <span
                         className={styles.option}
                         key="option"
@@ -236,12 +239,12 @@ export default class InfiniteListExample extends React.Component {
                       <Link to={'/folder/' + item.folderId}>{item.name}</Link>
                     )
                   }
-
-
                   description={'创建时间：' + item.createTime}
                 />
-                
-                {this.props.match.params.folder?<span></span>:item.type ? (
+
+                {this.props.match.params.folder ? (
+                  <span></span>
+                ) : item.type ? (
                   <div className={styles.optionBox}>
                     <span
                       className={styles.option}

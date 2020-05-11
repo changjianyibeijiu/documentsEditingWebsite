@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styles from './index.less';
 
-import { Upload, message,Avatar } from 'antd';
+import { Upload, message, Avatar } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 
 function getBase64(img, callback) {
@@ -52,30 +52,30 @@ export default class index extends Component {
     const { imageUrl } = this.state;
     return (
       <div className={styles.main}>
-          <div style={{fontSize:"1.5rem"}}>个人中心</div>
+        <div style={{ fontSize: '1.5rem' }}>个人中心</div>
         <div className={styles.userInfo}>
-            <div className = {styles.upload}>
+          <div className={styles.upload}>
             <Upload
-            name="avatar"
-            listType="picture-card"
-            className="avatar-uploader"
-            // className={styles.avatar}
-            showUploadList={false}
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            beforeUpload={beforeUpload}
-            onChange={this.handleChange}
-          >
-            {imageUrl ? (
-                <img src={imageUrl} alt="avatar" style={{width:"100%"}}/>
+              name="avatar"
+              listType="picture-card"
+              className="avatar-uploader"
+              // className={styles.avatar}
+              showUploadList={false}
+              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              beforeUpload={beforeUpload}
+              onChange={this.handleChange}
+            >
+              {imageUrl ? (
+                <img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
+              ) : (
                 // <Avatar size="large" alt='avatar' src={imageUrl}></Avatar>
-            ) : (
-              uploadButton
-            )}
-          </Upload>
-            </div>
-                <div className = {styles.info}>
-                    {this.props.userName} | {this.props.userEmail}
-                </div>
+                uploadButton
+              )}
+            </Upload>
+          </div>
+          <div className={styles.info}>
+            {this.props.userName} | {this.props.userEmail}
+          </div>
         </div>
         <div className={styles.setting}>
           <div className={styles.name}></div>
