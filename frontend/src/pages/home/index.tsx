@@ -8,6 +8,8 @@ const { Search } = Input;
 import NewCreate from '@/components/newCreate/index';
 import UserCard from '@/components/userCard/index';
 
+import request from '@/utils/request';
+
 import {
   ClockCircleOutlined,
   FolderOutlined,
@@ -19,14 +21,15 @@ import {
 
 function NewCard(props) {
   if (props.display) {
-    return <NewCreate></NewCreate>;
+    return <NewCreate closeNewCreate={props.closeNewCreate}></NewCreate>;
   } else {
     return <div />;
   }
 }
 function User(props) {
   if (props.display) {
-    return <UserCard></UserCard>;
+    console.log(props.userName);
+    return <UserCard userName={props.userName} userId={props.userId}></UserCard>;
   } else {
     return <div />;
   }
@@ -36,7 +39,7 @@ export default class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: '1', //当前选择菜单项
+      current: history.location.pathname, //当前选择菜单项
       newCreate: false, //显示新建选项卡
       userCard:false, //用户选项卡
       data: {
@@ -46,6 +49,20 @@ export default class index extends Component {
       },
     };
   }
+
+  closeNewCreate(){
+    this.setState({newCreate:false});
+  }
+
+  componentDidMount(){
+    console.log("以加载")
+    request.get('/currentUser').then((response) => {
+      this.setState({data:response.data.data,current:history.location.pathname});
+      console.log(response.data.data);
+    });
+  }
+
+
   newCreate(e) {
     this.setState({ newCreate: true });
     e.stopPropagation();
@@ -63,14 +80,16 @@ export default class index extends Component {
 
   render() {
     return (
-      <div onClick={() => this.setState({ newCreate: false,userCard:false })}>
+      
+      <div onClick={() => this.setState({ newCreate: false,userCard:false })} onHashChange={()=>{this.setState({current: history.location.pathname})}}>
         <Layout>
           <div className={styles.headerBox}>
             <header className={styles.header}>
-              <div className={styles.yunLogo}>
+
+              <div className={styles.yunLogo} onClick={()=>history.push('/')}>
                 <img src="/img/logo.png"></img>
               </div>
-              <div className={styles.yunName}>米粒文档</div>
+              <div className={styles.yunName} onClick={()=>history.push('/')}>米粒文档</div>
 
               <Search
                 className={styles.search}
@@ -78,10 +97,10 @@ export default class index extends Component {
                 onSearch={value => console.log(value)}
               />
               <div className={styles.user}>
-                <Avatar className={styles.avatar} onClick ={(e)=>this.user(e)}></Avatar>
+                <Avatar className={styles.avatar} onClick ={(e)=>this.user(e)} src={this.state.data.avatar}></Avatar>
 
                 <div className={styles.userCard}>
-                  <User display={this.state.userCard}></User>
+                  <User display={this.state.userCard} userName={this.state.data.userName} userId={this.state.data.userId}></User>
                 </div>
               </div>
             </header>
@@ -94,18 +113,21 @@ export default class index extends Component {
                   新建
                 </Button>
                 <div className={styles.newCreate}>
-                  <NewCard display={this.state.newCreate}></NewCard>
+                  <NewCard display={this.state.newCreate} closeNewCreate={this.closeNewCreate.bind(this)}></NewCard>
                 </div>
               </div>
               <Menu
                 defaultSelectedKeys={this.state.current}
+                // defaultSelectedKeys='/recently'
+                
                 onClick={({ item, key, keyPath, domEvent }) =>
                   this.menuHandleChange({ item, key, keyPath, domEvent })
                 }
+                className={styles.menu}
               >
                 {/* <Link to = "recently"> */}
                 <Menu.Item
-                  key="1"
+                  key="/recently"
                   onClick={() => history.push('/recently')}
                   icon={<ClockCircleOutlined></ClockCircleOutlined>}
                 >
@@ -114,7 +136,7 @@ export default class index extends Component {
                 {/* </Link> */}
                 {/* <Link to = "myDoc"> */}
                 <Menu.Item
-                  key="2"
+                  key="myDoc"
                   onClick={() => history.push('/myDoc')}
                   icon={<FolderOutlined />}
                 >
@@ -123,7 +145,7 @@ export default class index extends Component {
                 {/* </Link> */}
                 {/* <Link to="share"> */}
                 <Menu.Item
-                  key="3"
+                  key="/share"
                   onClick={() => history.push('/share')}
                   icon={<ForkOutlined />}
                 >
@@ -132,7 +154,7 @@ export default class index extends Component {
                 {/* </Link> */}
                 {/* <Link to="find"> */}
                 <Menu.Item
-                  key="4"
+                  key="/find"
                   onClick={() => history.push('/find')}
                   icon={<SearchOutlined />}
                 >
@@ -141,7 +163,7 @@ export default class index extends Component {
                 {/* </Link> */}
                 {/* <Link to="recycleBin"> */}
                 <Menu.Item
-                  key="5"
+                  key="/recycleBin"
                   onClick={() => history.push('/recycleBin')}
                   icon={<DeleteOutlined />}
                 >

@@ -10,7 +10,7 @@
   top: 0px;
   width: 100%;
   min-width:1000px;
-
+  z-index: 999;
 
   .header {
     .bgcolor();
@@ -21,6 +21,7 @@
 
     .yunLogo {
       max-height: 100%;
+      cursor: pointer;
 
       img {
         height: 2.5rem;
@@ -32,7 +33,7 @@
     .yunName {
       font-size: 1.5rem;
       line-height: 2.5rem;
-
+      cursor: pointer;
     }
 
     .search {
@@ -94,5 +95,11 @@
   .content {
     padding: 20px 20px;
     background-color: #fff;
+  }
+}
+
+.menu{
+  li:hover{
+    background-color:#e6f7ff;
   }
 }

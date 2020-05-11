@@ -6,4 +6,15 @@ module.exports = {
   // static: {
   //   enable: true,
   // }
+  static: {
+    enable: true,
+  },
+  mongoose: {
+    enable: true,
+    package: 'egg-mongoose',
+  },
+  cors: {
+    enable: true,
+    package: 'egg-cors',
+  },
 };

@@ -1,12 +1,12 @@
-const TokenKey = 'Admin-Token'
+const TokenKey = 'userToken'
 
-export function getToken(){
+export function readToken(){
     return localStorage.getItem(TokenKey)   //获取口令
 }
 
 
 //设置cookie口令
-export function setToken(token){
+export function saveToken(token){
     return localStorage.setItem(TokenKey,token);
 }
 
