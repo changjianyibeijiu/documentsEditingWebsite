@@ -11,7 +11,7 @@ const { confirm } = Modal;
 
 //创建请求实例
 const service = axios.create({
-  baseURL: '/api/',
+  baseURL: 'http://127.0.0.1:7001/api/',
   timeout: 25000,
 });
 
