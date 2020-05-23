@@ -21,7 +21,7 @@ export default class InfiniteListExample extends React.Component {
   };
 
   componentDidMount() {
-    console.log(this.props.location.query)
+    //console.log(this.props.location.query)
     if(this.props.location.query.search){
       this.searchData(res=>{
         this.setState({data:res.data.data});

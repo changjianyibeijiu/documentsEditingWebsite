@@ -28,7 +28,7 @@ function NewCard(props) {
 }
 function User(props) {
   if (props.display) {
-    console.log(props.userName);
+    //console.log(props.userName);
     return (
       <UserCard userName={props.userName} userId={props.userId}></UserCard>
     );
@@ -57,13 +57,13 @@ export default class index extends Component {
   }
 
   componentDidMount() {
-    console.log('以加载');
+    //console.log('以加载');
     request.get('/currentUser').then(response => {
       this.setState({
         data: response.data.data,
         current: history.location.pathname,
       });
-      console.log(response.data.data);
+      //console.log(response.data.data);
     });
   }
 
@@ -77,9 +77,9 @@ export default class index extends Component {
   }
 
   menuHandleChange({ item, key, keyPath, domEvent }) {
-    console.log(item);
-    console.log(key);
-    console.log(keyPath);
+    //console.log(item);
+    //console.log(key);
+    //console.log(keyPath);
   }
 
   render() {

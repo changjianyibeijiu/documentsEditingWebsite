@@ -37,22 +37,22 @@ export default class index extends Component {
   };
 
   onFinish = values => {
-    console.log('Received values of form: ', values);
+    //console.log('Received values of form: ', values);
     request.post('/register', { values }).then(response => {
       if (response.data.data.status == '9000') {
-        console.log('注册成功');
-        console.log(this);
+        //console.log('注册成功');
+        //console.log(this);
         this.setState({ message: '注册成功' });
 
         this.showConfirm();
       } else if (response.data.data.status == '9001') {
-        console.log('用户名重复');
+        //console.log('用户名重复');
         this.setState({ umessage: '用户名以使用，请更换用户名' });
       } else if (response.data.data.status == '9002') {
-        console.log('邮箱重复');
+        //console.log('邮箱重复');
         this.setState({ emessage: '邮箱以使用，请更换邮箱' });
       } else {
-        console.log('错误');
+        //console.log('错误');
         this.setState({ umessage: '未知错误，请重试！' });
       }
     });

@@ -14,22 +14,22 @@ export default class index extends Component {
   }
 
   onFinish = values => {
-    console.log('Received values of form: ', values);
+    //console.log('Received values of form: ', values);
     request.post('/login', { values }).then(response => {
       if (response.data.data.status == '8000') {
-        console.log('登录成功');
+        //console.log('登录成功');
         this.setState({ message: '登录成功' });
 
         saveToken(response.headers.authorization);
 
-        console.log(localStorage.getItem('userToken'));
+        //console.log(localStorage.getItem('userToken'));
 
         history.push('/');
       } else if (response.data.data.status == '8001') {
-        console.log('用户名或密码错误');
+        //console.log('用户名或密码错误');
         this.setState({ message: '用户名或密码错误' });
       } else {
-        console.log('登录失败');
+        //console.log('登录失败');
         this.setState({ message: '登陆失败请重新登录' });
       }
     });

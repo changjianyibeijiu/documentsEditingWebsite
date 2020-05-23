@@ -24,6 +24,9 @@ export default class InfiniteListExample extends React.Component {
         if (response.data.status == 'ok') {
           message.success('已还原');
         }
+        if(response){
+          message.success(response.data.message);
+        }
         this.fetchData(res => {
           this.setState({
             data: res.data.data,
@@ -38,6 +41,9 @@ export default class InfiniteListExample extends React.Component {
       .then(response => {
         if (response.data.status == 'ok') {
           message.success('已删除');
+        }
+        if(response){
+          message.success(response.data.message);
         }
         this.fetchData(res => {
           this.setState({

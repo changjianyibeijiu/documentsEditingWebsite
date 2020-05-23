@@ -8,7 +8,7 @@ module.exports = options => {
 
     // 当前token值不存在的时候
     if (!token) {
-      console.log('无口令')
+      //console.log('无口令')
       ctx.body = {
         code: '200',
         data: {
@@ -24,7 +24,7 @@ module.exports = options => {
         // 验证当前token
         decode = JWT.verify(token, options.secret);
         if (!decode || !decode.userId) {
-          console.log('口令无效')
+          //console.log('口令无效')
           ctx.body = {
             code: '200',
             data: {
@@ -36,7 +36,7 @@ module.exports = options => {
           return;
         }
         if (Date.now() - decode.expire > 0) {
-          console.log('口令过期')
+          //console.log('口令过期')
           ctx.body = {
             code: '200',
             data: {
@@ -51,11 +51,11 @@ module.exports = options => {
           _id: decode.userId,
         });
         if (user) {
-          // console.log('找到用户id')
+          // //console.log('找到用户id')
           await next();
 
         } else {
-          console.log("无用户")
+          //console.log("无用户")
           ctx.body = {
             code: '200',
             data: {
@@ -67,7 +67,7 @@ module.exports = options => {
           return;
         }
       } catch (e) {
-        console.log(e);
+        //console.log(e);
         ctx.body = {
           code: '200',
           data: {

@@ -30,12 +30,12 @@ export default class index extends Component {
   };
 
   handleOk = e => {
-    // console.log(e);
+    // //console.log(e);
     this.setState({
       visible: false,
     });
     this.props.closeNewCreate();
-    console.log('关闭');
+    //console.log('关闭');
     request.post('/folder', {
       share: this.state.share,
       folder: this.state.folderName,
@@ -52,7 +52,7 @@ export default class index extends Component {
   };
 
   handleCancel = e => {
-    console.log(e);
+    //console.log(e);
     this.setState({
       visible: false,
     });
@@ -60,10 +60,10 @@ export default class index extends Component {
   };
 
   inputChange = e => {
-    console.log('input change');
-    console.log(e.target.value);
+    //console.log('input change');
+    //console.log(e.target.value);
     this.setState({ folderName: e.target.value });
-    // console.log(this.state.folderName);
+    // //console.log(this.state.folderName);
   };
 
   render() {
@@ -76,15 +76,15 @@ export default class index extends Component {
       },
       {
         img: <FileExcelFilled />,
-        title: '表格',
+        title: '拓扑图',
         color: '#26BD85',
-        path: '/edit/excel',
+        path: '/edit/koni',
       },
       {
         img: <FormatPainterFilled />,
         title: '流程图',
         color: '#687bf7',
-        path: '/edit/flowSheet',
+        path: '/edit/flow',
       },
       {
         img: <FileTextFilled />,

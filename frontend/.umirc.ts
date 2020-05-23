@@ -40,33 +40,26 @@ export default defineConfig({
               routes:[
                 { path: '/edit', redirect: '/edit/word' },
 
-                // { path: '/edit/word', component: '@/pages/word/index' },
-                // { path: '/edit/word/:folerId', component: '@/pages/word/index' },
 
                 { path: '/edit/word/:id?', component: '@/pages/word/index' },
                 { path: '/edit/word/:folderId/:id', component: '@/pages/word/index' },
 
 
+                { path: '/edit/koni/:id?', component: '@/pages/koni/index' },
+                { path: '/edit/koni/:folderId/:id', component: '@/pages/koni/index' },
 
-                { path: '/edit/excel/:id', component: '@/pages/excel/index' },
-                { path: '/edit/excel/folder/:folderId/:id', component: '@/pages/excel/index' },
-                { path: '/edit/excel', component: '@/pages/excel/index' },
-
-                { path: '/edit/flowSheet/:id', component: '@/pages/flowSheet/index' },
-                { path: '/edit/flowSheet/folder/:folderId/:id', component: '@/pages/flowSheet/index' },
-                { path: '/edit/flowSheet', component: '@/pages/flowSheet/index' },
+                { path: '/edit/flow/:id?', component: '@/pages/flow/index' },
+                { path: '/edit/flow/:folderId/:id', component: '@/pages/flow/index' },
                 
-                { path: '/edit/mind/:id', component: '@/pages/mind/index' },
-                { path: '/edit/mind/folder/:folderId/:id', component: '@/pages/mind/index' },
+                { path: '/edit/mind/:id?', component: '@/pages/mind/index' },
+                { path: '/edit/mind/:folderId/:id', component: '@/pages/mind/index' },
 
 
-                { path: '/edit/mind', component: '@/pages/mind/index' },
 
-                { path: '/edit/md/:id', component: '@/pages/md/index' },
-                { path: '/edit/md/folder/:folderId/:id', component: '@/pages/md/index' },
+                { path: '/edit/md/:id?', component: '@/pages/md/index' },
+                { path: '/edit/md/:folderId/:id', component: '@/pages/md/index' },
 
 
-                { path: '/edit/md', component: '@/pages/md/index' },
 
               ]
           },

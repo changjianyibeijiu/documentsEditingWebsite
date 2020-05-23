@@ -28,52 +28,61 @@ class FolderController extends Controller {
           share: true
         });
         await person.save().then(async (data) => {
-          console.log("共享文件夹创建成功");
-          await ctx.model.Share.find().then(async data => {
-            if (!data[0]) {
-              await ctx.model.Share.create([{
-                doc: [],
-                folder: [{
-                  userName: person.userName,
-                  userEmail: person.userEmail,
-                  avatar: person.avatar,
-                  name: folder,
-                  createTime: createTime,
-                  editTime: editTime,
-                }]
-              }]).then(() => {
-                console.log('创建共享集合');
-                console.log(data);
-                console.log("以分享");
-                ctx.body = {
-                  code: "200",
-                  data: {
-                    message: "成功创建共享文件夹",
-                  }
-                };
-
-              });
-            } else {
-              console.log(data);
-              data[0].folder.push({
-                userName: person.userName,
-                userEmail: person.userEmail,
-                avatar: person.avatar,
-                name: folder,
-                createTime: createTime,
-                editTime: editTime,
-              });
-              await data[0].save().then((data) => {
-                console.log("以分享");
-                ctx.body = {
-                  code: "200",
-                  data: {
-                    message: "成功创建共享文件夹",
-                  }
-                };
-              });
+            ////console.log('创建共享集合');
+            ////console.log(data);
+            ////console.log("以分享");
+            ctx.body = {
+              code: "200",
+              data: {
+                message: "成功创建共享文件夹",
             }
-          });
+          };
+          ////console.log("共享文件夹创建成功");
+          // await ctx.model.Share.find().then(async data => {
+          //   if (!data[0]) {
+          //     await ctx.model.Share.create([{
+          //       doc: [],
+          //       folder: [{
+          //         userName: person.userName,
+          //         userEmail: person.userEmail,
+          //         // avatar: person.avatar,
+          //         name: folder,
+          //         createTime: createTime,
+          //         editTime: editTime,
+          //       }]
+          //     }]).then(() => {
+          //       ////console.log('创建共享集合');
+          //       ////console.log(data);
+          //       ////console.log("以分享");
+          //       ctx.body = {
+          //         code: "200",
+          //         data: {
+          //           message: "成功创建共享文件夹",
+          //         }
+          //       };
+
+          //     });
+          //   } else {
+          //     ////console.log(data);
+          //     data[0].folder.push({
+          //       userName: person.userName,
+          //       userEmail: person.userEmail,
+          //       // avatar: person.avatar,
+          //       name: folder,
+          //       createTime: createTime,
+          //       editTime: editTime,
+          //     });
+          //     await data[0].save().then((data) => {
+          //       ////console.log("以分享");
+          //       ctx.body = {
+          //         code: "200",
+          //         data: {
+          //           message: "成功创建共享文件夹",
+          //         }
+          //       };
+          //     });
+          //   }
+          // });
 
         });
 
@@ -90,7 +99,7 @@ class FolderController extends Controller {
           share: false
         });
         await person.save().then((data) => {
-          console.log("个人文件夹创建成功");
+          ////console.log("个人文件夹创建成功");
 
           ctx.body = {
             code: "200",
@@ -110,7 +119,7 @@ class FolderController extends Controller {
     const {
       ctx
     } = this;
-    // console.log(ctx.query.results);
+    // ////console.log(ctx.query.results);
 
 
     const token = ctx.request.header.authorization;
@@ -120,11 +129,11 @@ class FolderController extends Controller {
     await ctx.model.User.findById({
       _id: userId
     }).then(async person => {
-      // console.log(person);
+      // ////console.log(person);
 
       for (let i = 0; i < person.folder.length; i++) {
         if (person.folder[i]._id == ctx.query.folderId) {
-          console.log("找到文件夹");
+          ////console.log("找到文件夹");
           let doc = person.folder[i].doc.filter((item) => {
             return item.delete == false;
           }).map((item) => {
@@ -139,8 +148,8 @@ class FolderController extends Controller {
             }
           }).reverse();
 
-          console.log("doc");
-          console.log(doc);
+          ////console.log("doc");
+          ////console.log(doc);
           let json = {
             code: '200',
             messege: '数据获取成功',

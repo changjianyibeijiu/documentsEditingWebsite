@@ -35,7 +35,7 @@ export default class index extends Component {
 
   change = info => {
     if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
+      //console.log(info.file, info.fileList);
     }
     if (info.file.status === 'done') {
       request.get('/currentUser').then(response => {
@@ -44,7 +44,7 @@ export default class index extends Component {
           userEmail: response.data.data.userEmail,
           avatar: response.data.data.avatar,
         });
-        console.log(response.data.data);
+        //console.log(response.data.data);
       });
       message.success(`头像上传成功`);
     } else if (info.file.status === 'error') {
@@ -61,7 +61,7 @@ export default class index extends Component {
             userEmail: this.state.userEmail,
           })
           .then(response => {
-            console.log(response);
+            //console.log(response);
             if (response.data.data.status == '9001') {
               this.openNotificationWithIcon(
                 'error',
@@ -85,7 +85,7 @@ export default class index extends Component {
                   email: response.data.data.userEmail,
                   avatar: response.data.data.avatar,
                 });
-                console.log(response.data.data);
+                //console.log(response.data.data);
               });
             }
           });
@@ -104,7 +104,7 @@ export default class index extends Component {
         request
           .post('/userCenter/userPassword', { password: this.state.password })
           .then(response => {
-            console.log(response.data.data.messege);
+            //console.log(response.data.data.messege);
             this.openNotificationWithIcon(
               'success',
               response.data.data.messege,
@@ -122,7 +122,7 @@ export default class index extends Component {
   };
 
   componentDidMount() {
-    console.log('以加载');
+    //console.log('以加载');
     request.get('/currentUser').then(response => {
       this.setState({
         userName: response.data.data.userName,
@@ -131,7 +131,7 @@ export default class index extends Component {
         email: response.data.data.userEmail,
         avatar: response.data.data.avatar,
       });
-      console.log(response.data.data);
+      //console.log(response.data.data);
     });
   }
   render() {

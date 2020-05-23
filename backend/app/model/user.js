@@ -50,7 +50,7 @@ module.exports = app => {
       },
       icon: {
         type: String,
-        default: '/public/word.png'
+        default: '/img/word.png'
       },
       rm: {
         type: Boolean,
@@ -69,7 +69,7 @@ module.exports = app => {
       },
       icon: {
         type: String,
-        default: '/public/folder.png'
+        default: '/img/folder.png'
       },
       delete: {
         type: Boolean,
@@ -117,7 +117,7 @@ module.exports = app => {
         },
         icon: {
           type: String,
-          default: '/public/word.png'
+          default: '/img/word.png'
         },
 
       }],

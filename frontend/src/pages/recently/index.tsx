@@ -24,6 +24,9 @@ export default class InfiniteListExample extends React.Component {
         if (response.data.status == 'ok') {
           message.success('已分享文档');
         }
+        if(response){
+          message.success(response.data.message);
+        }
       });
   }
 
@@ -33,6 +36,9 @@ export default class InfiniteListExample extends React.Component {
       .then(response => {
         if (response.data.status == 'ok') {
           message.success('已取消分享');
+        }
+        if(response){
+          message.success(response.data.message);
         }
         this.fetchData(res => {
           this.setState({
@@ -67,6 +73,30 @@ export default class InfiniteListExample extends React.Component {
 
         history.push(`/edit/md/${id}`);
       }
+    }else if (type == 'flow') {
+      if(folderId){
+        history.push(`/edit/flow/${folderId}/${id}`)
+      }
+      else{
+
+        history.push(`/edit/flow/${id}`);
+      }
+    }else if (type == 'koni') {
+      if(folderId){
+        history.push(`/edit/koni/${folderId}/${id}`)
+      }
+      else{
+
+        history.push(`/edit/koni/${id}`);
+      }
+    }else if (type == 'excel') {
+      if(folderId){
+        history.push(`/edit/excel/${folderId}/${id}`)
+      }
+      else{
+
+        history.push(`/edit/excel/${id}`);
+      }
     }
   }
   delete(id, folderId) {
@@ -75,6 +105,9 @@ export default class InfiniteListExample extends React.Component {
       .then(response => {
         if (response.data.status == 'ok') {
           message.success('已删除文档');
+        }
+        if(response){
+          message.success(response.data.message);
         }
         this.fetchData(res => {
           this.setState({

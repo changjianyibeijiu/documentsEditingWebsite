@@ -22,27 +22,27 @@ class FileController extends Controller {
 
     await ctx.model.User.findById(userId).then(
       async (person) => {
-          // console.log(person);
-          console.log("保存文件");
-          // console.log(ctx.request.body);
+          // ////console.log(person);
+          ////console.log("保存文件");
+          // ////console.log(ctx.request.body);
 
           if (id) {
             //如果id存在，文件夹不在，则修改文件
             // 获取文件地址
             let filepath;
-            if (folderId.toString() != 'false'&&folderId) {
-              console.log("foleId" + folderId)
+            if (folderId.toString() != 'false' && folderId) {
+              ////console.log("foleId" + folderId)
               for (let i = 0; i < person.folder.length; i++) {
                 if (person.folder[i]._id == folderId) {
-                  console.log("找到文件夹");
+                  ////console.log("找到文件夹");
 
                   for (let y = 0; y < person.folder[i].doc.length; y++) {
                     if (person.folder[i].doc[y]._id == id) {
-                      console.log("找到文件夹id");
+                      ////console.log("找到文件夹id");
 
                       filepath = person.folder[i].doc[y].path;
 
-                      console.log('文件路径' + filepath);
+                      ////console.log('文件路径' + filepath);
 
                       fs.writeFile(filepath, data.content, function (err) {
                         if (err) {
@@ -55,14 +55,14 @@ class FileController extends Controller {
 
                           return console.error(err);
                         }
-                        console.log("数据写入成功！");
+                        ////console.log("数据写入成功！");
                       });
 
                       person.folder[i].doc[y].editTime = data.editTime;
                       person.folder[i].doc[y].name = data.name;
 
                       await person.save().then((data) => {
-                        console.log("数据保存成功");
+                        ////console.log("数据保存成功");
 
                         ctx.body = {
                           code: "200",
@@ -96,7 +96,7 @@ class FileController extends Controller {
             } else {
               for (let i = 0; i < person.doc.length; i++) {
                 if (person.doc[i]._id == id) {
-                  console.log("找到文件id");
+                  ////console.log("找到文件id");
                   filepath = person.doc[i].path;
                   //将文件保存到磁盘
                   fs.writeFile(filepath, data.content, function (err) {
@@ -110,14 +110,14 @@ class FileController extends Controller {
 
                       return console.error(err);
                     }
-                    console.log("数据写入成功！");
+                    ////console.log("数据写入成功！");
                   });
 
                   person.doc[i].editTime = data.editTime;
                   person.doc[i].name = data.name;
 
                   await person.save().then((data) => {
-                    console.log("数据保存成功");
+                    ////console.log("数据保存成功");
 
                     ctx.body = {
                       code: "200",
@@ -141,25 +141,41 @@ class FileController extends Controller {
             }
           } else {
             //如果docid不存在，则添加文件
-            console.log('文件id' + id);
+            ////console.log('文件id' + id);
 
             // 定义文件名
             const user = userId.slice(9);
             const filename = Date.now() + Math.round(Math.random() * 1000000).toString();
             // 目标文件
             let filepath;
+            let icon;
             if (type == "word") {
               filepath = path.join(`app/azz/${user}/doc`, filename + ".word");
+              icon = '/img/word.png'
             } else if (type == "md") {
               filepath = path.join(`app/azz/${user}/doc`, filename + ".md");
+              icon = '/img/md.png'
+
             } else if (type == "mind") {
               filepath = path.join(`app/azz/${user}/doc`, filename + ".mind");
+              icon = '/img/mind.png'
+
             } else if (type == "flow") {
               filepath = path.join(`app/azz/${user}/doc`, filename + ".flow");
+              icon = '/img/flow.png'
+
+            } else if (type == "koni") {
+              filepath = path.join(`app/azz/${user}/doc`, filename + ".koni");
+              icon = '/img/koni.png'
+
             } else if (type == "excel") {
               filepath = path.join(`app/azz/${user}/doc`, filename + ".excel");
+              icon = '/img/excel.png'
+
             } else {
               filepath = path.join(`app/azz/${user}/doc`, filename + ".word");
+              icon = '/img/word.png'
+
             }
 
             // try{
@@ -170,7 +186,7 @@ class FileController extends Controller {
             // }
             createfile(filepath);
 
-            console.log("data.content:" + data.content);
+            ////console.log("data.content:" + data.content);
             //将文件保存到磁盘
             fs.writeFile(filepath, data.content, function (err) {
               if (err) {
@@ -182,39 +198,40 @@ class FileController extends Controller {
                 };
                 return console.error(err);
               }
-              console.log("数据写入成功！");
+              ////console.log("数据写入成功！");
               //   fs.readFile(target, function (err, data) {
               //     if (err) {
               //       return console.error(err);
               //     }
-              //     console.log("异步读取文件数据: " + data.toString());
+              //     ////console.log("异步读取文件数据: " + data.toString());
               //   });
             });
 
             if (folderId != false) {
-              console.log("folderId" + folderId);
+              ////console.log("folderId" + folderId);
               for (let i = 0; i < person.folder.length; i++) {
                 if (person.folder[i]._id == folderId) {
-                  console.log("找到文件夹");
+                  ////console.log("找到文件夹");
                   let docdata = {
                     type: type,
                     name: data.name,
                     path: filepath,
                     createTime: data.createTime,
                     editTime: data.editTime.toString(),
+                    icon: icon,
                   };
 
-                  console.log('docdata' + docdata);
+                  ////console.log('docdata' + docdata);
 
-                  console.log(person.folder[i]);
+                  ////console.log(person.folder[i]);
 
                   person.folder[i].doc.push(docdata);
-                  console.log(person.folder[i].doc);
+                  ////console.log(person.folder[i].doc);
 
                   await person.save().then((data) => {
-                    console.log("数据保存成功");
-                    console.log(person.folder[i].doc);
-                    console.log(i);
+                    ////console.log("数据保存成功");
+                    ////console.log(person.folder[i].doc);
+                    ////console.log(i);
                     ctx.body = {
                       code: "200",
                       data: {
@@ -248,12 +265,13 @@ class FileController extends Controller {
                 path: filepath,
                 createTime: data.createTime,
                 editTime: data.editTime,
+                icon: icon,
               };
 
               person.doc.push(docdata);
 
               await person.save().then((data) => {
-                console.log("数据保存成功");
+                ////console.log("数据保存成功");
 
                 ctx.body = {
                   code: "200",
@@ -285,7 +303,7 @@ class FileController extends Controller {
     const id = ctx.query.id;
     const folderId = ctx.query.folderId;
 
-    console.log(ctx.query);
+    ////console.log(ctx.query);
 
     const token = ctx.request.header.authorization;
     const userId = tokenparse(token, app.config.jwt.secret);
@@ -295,14 +313,14 @@ class FileController extends Controller {
     }).then(
       async (person) => {
           if (folderId != 'false') {
-            console.log('folderId:' + folderId);
+            ////console.log('folderId:' + folderId);
             for (let i = 0; i < person.folder.length; i++) {
               if (person.folder[i]._id == folderId) {
                 for (let x = 0; x < person.folder[i].doc.length; x++) {
                   if (person.folder[i].doc[x]._id == id) {
                     let filepath = person.folder[i].doc[x].path;
                     var data = fs.readFileSync(filepath);
-                    console.log("同步读取: " + data.toString());
+                    ////console.log("同步读取: " + data.toString());
                     ctx.body = {
                       code: "200",
                       data: {
@@ -312,6 +330,7 @@ class FileController extends Controller {
                         id: person.folder[i].doc[x]._id,
                         createTime: person.folder[i].doc[x].createTime,
                         folderId: person.folder[i]._id,
+                        type: person.folder[i].doc[x].type,
                       },
                     };
                     break;
@@ -339,7 +358,7 @@ class FileController extends Controller {
               if (person.doc[x]._id == id) {
                 let filepath = person.doc[x].path;
                 var data = fs.readFileSync(filepath);
-                console.log("同步读取: " + data.toString());
+                ////console.log("同步读取: " + data.toString());
                 ctx.body = {
                   code: "200",
                   data: {
@@ -348,6 +367,8 @@ class FileController extends Controller {
                     name: person.doc[x].name,
                     id: person.doc[x]._id,
                     createTime: person.doc[x].createTime,
+                    type: person.doc[x].type
+
                   },
                 };
                 break;
@@ -387,12 +408,12 @@ class FileController extends Controller {
     let folderId = ctx.request.body.data.folderId;
 
 
-    console.log("id:" + id);
-    console.log("folderId:" + folderId);
+    ////console.log("id:" + id);
+    //console.log("folderId:" + folderId);
 
     if (id && folderId) {
 
-      console.log('删除文件夹中文档');
+      // console.log('删除文件夹中文档');
 
       await ctx.model.User.findById({
         _id: userId
@@ -400,17 +421,19 @@ class FileController extends Controller {
 
 
         for (let i = 0; i < person.folder.length; i++) {
-          if (person.folder[i]._id == folderId) {
-            console.log("找到文件夹");
-
+          // console.log("进入for循环")
+          // console.log(folderId);
+          // console.log(person.folder[i]._id);
+           if(person.folder[i]._id == folderId){
+                       // console.log("找到文件夹");
             for (let y = 0; y < person.folder[i].doc.length; y++) {
               if (person.folder[i].doc[y]._id == id) {
-                console.log("找到文件夹id");
+                // console.log("找到文件夹id");
 
                 person.folder[i].doc[y].delete = true;
 
                 await person.save().then(async (data) => {
-                  console.log("文件删除成功");
+                  ////console.log("文件删除成功");
                   ctx.body = {
                     code: '200',
                     data: {
@@ -419,10 +442,13 @@ class FileController extends Controller {
                   }
 
                 });
+                break;
+
               }
             }
+            break;
+
           }
-          break;
         }
 
 
@@ -430,7 +456,7 @@ class FileController extends Controller {
       });
 
     } else if (id && !folderId) {
-      console.log('删除文档');
+      ////console.log('删除文档');
 
       await ctx.model.User.findById({
         _id: userId
@@ -439,12 +465,12 @@ class FileController extends Controller {
 
         for (let i = 0; i < person.doc.length; i++) {
           if (person.doc[i]._id == id) {
-            console.log("找到文件");
+            ////console.log("找到文件");
 
             person.doc[i].delete = true;
 
             await person.save().then(async (data) => {
-              console.log("文件删除成功");
+              ////console.log("文件删除成功");
               ctx.body = {
                 code: '200',
                 data: {
@@ -470,7 +496,7 @@ class FileController extends Controller {
 
 
     } else {
-      console.log('删除文件夹');
+      ////console.log('删除文件夹');
 
       await ctx.model.User.findById({
         _id: userId
@@ -479,11 +505,11 @@ class FileController extends Controller {
 
         for (let i = 0; i < person.folder.length; i++) {
           if (person.folder[i]._id == folderId) {
-            console.log("找到文件夹");
+            ////console.log("找到文件夹");
             person.folder[i].delete = true;
 
             await person.save().then(async (data) => {
-              console.log("文件删除成功");
+              ////console.log("文件删除成功");
               ctx.body = {
                 code: '200',
                 data: {
@@ -522,7 +548,7 @@ class FileController extends Controller {
 
     if (id && folderId) {
 
-      console.log('还原文件夹中文档');
+      ////console.log('还原文件夹中文档');
 
       await ctx.model.User.findById({
         _id: userId
@@ -531,16 +557,16 @@ class FileController extends Controller {
 
         for (let i = 0; i < person.folder.length; i++) {
           if (person.folder[i]._id == folderId) {
-            console.log("找到文件夹");
+            ////console.log("找到文件夹");
 
             for (let y = 0; y < person.folder[i].doc.length; y++) {
               if (person.folder[i].doc[y]._id == id) {
-                console.log("找到文件夹id");
+                ////console.log("找到文件夹id");
 
                 person.folder[i].doc[y].delete = false;
 
                 await person.save().then(async (data) => {
-                  console.log("文件还原成功");
+                  ////console.log("文件还原成功");
                   ctx.body = {
                     code: '200',
                     data: {
@@ -561,7 +587,7 @@ class FileController extends Controller {
       });
 
     } else if (id && !folderId) {
-      console.log('还原文档');
+      ////console.log('还原文档');
 
       await ctx.model.User.findById({
         _id: userId
@@ -570,12 +596,12 @@ class FileController extends Controller {
 
         for (let i = 0; i < person.doc.length; i++) {
           if (person.doc[i]._id == id) {
-            console.log("找到文件");
+            ////console.log("找到文件");
 
             person.doc[i].delete = false;
 
             await person.save().then(async (data) => {
-              console.log("文件还原成功");
+              ////console.log("文件还原成功");
               ctx.body = {
                 code: '200',
                 data: {
@@ -594,7 +620,7 @@ class FileController extends Controller {
 
 
     } else {
-      console.log('还原文件夹');
+      ////console.log('还原文件夹');
 
       await ctx.model.User.findById({
         _id: userId
@@ -603,11 +629,11 @@ class FileController extends Controller {
 
         for (let i = 0; i < person.folder.length; i++) {
           if (person.folder[i]._id == folderId) {
-            console.log("找到文件夹");
+            ////console.log("找到文件夹");
             person.folder[i].delete = false;
 
             await person.save().then(async (data) => {
-              console.log("文件还原成功");
+              ////console.log("文件还原成功");
               ctx.body = {
                 code: '200',
                 data: {
@@ -645,7 +671,7 @@ class FileController extends Controller {
 
     if (id && folderId) {
 
-      console.log('分享文件夹中文档');
+      ////console.log('分享文件夹中文档');
 
       await ctx.model.User.findById({
         _id: userId
@@ -654,16 +680,16 @@ class FileController extends Controller {
 
         for (let i = 0; i < person.folder.length; i++) {
           if (person.folder[i]._id == folderId) {
-            console.log("找到文件夹");
+            ////console.log("找到文件夹");
 
             for (let y = 0; y < person.folder[i].doc.length; y++) {
               if (person.folder[i].doc[y]._id == id) {
-                console.log("找到文件夹id");
+                ////console.log("找到文件夹id");
 
                 person.folder[i].doc[y].share = true;
 
                 await person.save().then(async (data) => {
-                  console.log("文件分享成功");
+                  ////console.log("文件分享成功");
                   ctx.body = {
                     code: '200',
                     data: {
@@ -687,7 +713,7 @@ class FileController extends Controller {
       });
 
     } else if (id && !folderId) {
-      console.log('分享文档');
+      ////console.log('分享文档');
 
       await ctx.model.User.findById({
         _id: userId
@@ -696,12 +722,12 @@ class FileController extends Controller {
 
         for (let i = 0; i < person.doc.length; i++) {
           if (person.doc[i]._id == id) {
-            console.log("找到文件");
+            ////console.log("找到文件");
 
             person.doc[i].share = true;
 
             await person.save().then(async (data) => {
-              console.log("文件分享成功");
+              ////console.log("文件分享成功");
               ctx.body = {
                 code: '200',
                 data: {
@@ -720,7 +746,7 @@ class FileController extends Controller {
 
 
     } else {
-      console.log('分享文件夹');
+      ////console.log('分享文件夹');
 
       await ctx.model.User.findById({
         _id: userId
@@ -729,11 +755,11 @@ class FileController extends Controller {
 
         for (let i = 0; i < person.folder.length; i++) {
           if (person.folder[i]._id == folderId) {
-            console.log("找到文件夹");
+            ////console.log("找到文件夹");
             person.folder[i].share = true;
 
             await person.save().then(async (data) => {
-              console.log("文件分享成功");
+              ////console.log("文件分享成功");
               ctx.body = {
                 code: '200',
                 data: {
@@ -772,7 +798,7 @@ class FileController extends Controller {
 
     if (id && folderId) {
 
-      console.log('取消分享文件夹中文档');
+      ////console.log('取消分享文件夹中文档');
 
       await ctx.model.User.findById({
         _id: userId
@@ -781,16 +807,16 @@ class FileController extends Controller {
 
         for (let i = 0; i < person.folder.length; i++) {
           if (person.folder[i]._id == folderId) {
-            console.log("找到文件夹");
+            ////console.log("找到文件夹");
 
             for (let y = 0; y < person.folder[i].doc.length; y++) {
               if (person.folder[i].doc[y]._id == id) {
-                console.log("找到文件夹id");
+                ////console.log("找到文件夹id");
 
                 person.folder[i].doc[y].share = false;
 
                 await person.save().then(async (data) => {
-                  console.log("取消分享成功");
+                  ////console.log("取消分享成功");
                   ctx.body = {
                     code: '200',
                     data: {
@@ -811,7 +837,7 @@ class FileController extends Controller {
       });
 
     } else if (id && !folderId) {
-      console.log('取消分享文件');
+      ////console.log('取消分享文件');
 
       await ctx.model.User.findById({
         _id: userId
@@ -820,12 +846,12 @@ class FileController extends Controller {
 
         for (let i = 0; i < person.doc.length; i++) {
           if (person.doc[i]._id == id) {
-            console.log("找到文件");
+            ////console.log("找到文件");
 
             person.doc[i].share = false;
 
             await person.save().then(async (data) => {
-              console.log("取消分享成功");
+              ////console.log("取消分享成功");
               ctx.body = {
                 code: '200',
                 data: {
@@ -844,7 +870,7 @@ class FileController extends Controller {
 
 
     } else {
-      console.log('取消分享文件夹');
+      ////console.log('取消分享文件夹');
 
       await ctx.model.User.findById({
         _id: userId
@@ -853,11 +879,11 @@ class FileController extends Controller {
 
         for (let i = 0; i < person.folder.length; i++) {
           if (person.folder[i]._id == folderId) {
-            console.log("找到文件夹");
+            ////console.log("找到文件夹");
             person.folder[i].share = false;
 
             await person.save().then(async (data) => {
-              console.log("取消分享成功");
+              ////console.log("取消分享成功");
               ctx.body = {
                 code: '200',
                 data: {
@@ -896,7 +922,7 @@ class FileController extends Controller {
 
     if (id && folderId) {
 
-      console.log('永久删除文件夹中文档');
+      ////console.log('永久删除文件夹中文档');
 
       await ctx.model.User.findById({
         _id: userId
@@ -905,16 +931,16 @@ class FileController extends Controller {
 
         for (let i = 0; i < person.folder.length; i++) {
           if (person.folder[i]._id == folderId) {
-            console.log("找到文件夹");
+            ////console.log("找到文件夹");
 
             for (let y = 0; y < person.folder[i].doc.length; y++) {
               if (person.folder[i].doc[y]._id == id) {
-                console.log("找到文件夹id");
+                ////console.log("找到文件夹id");
 
                 person.folder[i].doc[y].rm = true;
 
                 await person.save().then(async (data) => {
-                  console.log("永久删除成功");
+                  ////console.log("永久删除成功");
                   ctx.body = {
                     code: '200',
                     data: {
@@ -936,7 +962,7 @@ class FileController extends Controller {
       });
 
     } else if (id && !folderId) {
-      console.log('永久删除文件');
+      ////console.log('永久删除文件');
 
       await ctx.model.User.findById({
         _id: userId
@@ -945,12 +971,12 @@ class FileController extends Controller {
 
         for (let i = 0; i < person.doc.length; i++) {
           if (person.doc[i]._id == id) {
-            console.log("找到文件");
+            ////console.log("找到文件");
 
             person.doc[i].rm = true;
 
             await person.save().then(async (data) => {
-              console.log("永久删除成功");
+              ////console.log("永久删除成功");
               ctx.body = {
                 code: '200',
                 data: {
@@ -970,7 +996,7 @@ class FileController extends Controller {
 
 
     } else {
-      console.log('永久删除文件夹');
+      ////console.log('永久删除文件夹');
 
       await ctx.model.User.findById({
         _id: userId
@@ -979,11 +1005,11 @@ class FileController extends Controller {
 
         for (let i = 0; i < person.folder.length; i++) {
           if (person.folder[i]._id == folderId) {
-            console.log("找到文件夹");
+            ////console.log("找到文件夹");
             person.folder[i].rm = true;
 
             await person.save().then(async (data) => {
-              console.log("永久删除成功");
+              ////console.log("永久删除成功");
               ctx.body = {
                 code: '200',
                 data: {

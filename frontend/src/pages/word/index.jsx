@@ -23,7 +23,7 @@ async function fetchEditorContent(id, folderId) {
   await request.get(`/file?id=${id}&folderId=${folderId}`).then(response => {
     data = response.data.data;
   });
-  // console.log(`find file ${data}`);
+  // //console.log(`find file ${data}`);
   return data;
 }
 
@@ -59,16 +59,17 @@ export default class EditorPage extends React.Component {
 
     visible: false,
 
+
   };
 
   // fetchEditorContent = this.props.getdata;
   // saveEditorContent = this.props.savedata;
   async componentDidMount() {
-    // console.log(this.props.match);
+    // //console.log(this.props.match);
     // 假设此处从服务端获取html格式的编辑器内容
-    // console.log("docid");
-    console.log(this.props.match.params.id);
-    console.log(this.props.match.params.folderId);
+    // //console.log("docid");
+    //console.log(this.props.match.params.id);
+    //console.log(this.props.match.params.folderId);
 
     const id = this.props.match.params.id ? this.props.match.params.id : false;
     const folderId = this.props.match.params.folderId
@@ -77,11 +78,11 @@ export default class EditorPage extends React.Component {
     if (id) {
       let data = await fetchEditorContent(id, folderId);
 
-      console.log(data);
+      //console.log(data);
 
       let rawContent = data.content;
 
-      console.log(rawContent);
+      //console.log(rawContent);
 
       this.setState({
         editorState: BraftEditor.createEditorState(rawContent),
@@ -132,14 +133,19 @@ export default class EditorPage extends React.Component {
       id: this.state.id,
       editTime: Date.now(),
     };
-    console.log(data)
+    //console.log(data)
     const result = await saveEditorContent(
       data,
       'word',
       this.state.folderId,
       this.state.id,
     );
-    console.log(result);
+    //console.log(result);
+
+    if(result){
+      message.success(result.message);
+    }
+
     this.setState({
       id: this.state.id?this.state.id:result.id,
       folderId: this.state.folderId?this.state.folderId:result.folderId ? result.folderId : '',
@@ -149,18 +155,18 @@ export default class EditorPage extends React.Component {
   };
 
   inputChange = e => {
-    console.log('input change');
-    console.log(e.target.value);
+    //console.log('input change');
+    //console.log(e.target.value);
     this.setState({ name: e.target.value });
-    // console.log(this.state.folderName);
+    // //console.log(this.state.folderName);
   };
 
   type = e => {
-    this.setState({ type: e.target.value });
+    // this.setState({ type: e.target.value });
   };
 
   handleOk = e => {
-    // console.log(e);
+    // //console.log(e);
     this.setState({
       visible: false,
     });
@@ -169,14 +175,14 @@ export default class EditorPage extends React.Component {
   };
 
   handleCancel = e => {
-    console.log(e);
+    //console.log(e);
     this.setState({
       visible: false,
     });
   };
 
   handleEditorChange = editorState => {
-    console.log(this);
+    //console.log(this);
     this.setState({ editorState, savebutton: '' });
   };
 
@@ -189,9 +195,21 @@ export default class EditorPage extends React.Component {
         onClick: this.submitContent,
         disabled: this.state.savebutton,
       },
+      {
+        key: 'print-button',
+        type :'button',
+        title: '打印文档内容',
+        text: '打印',
+        onClick:()=>{
+          this.submitContent();
+          window.document.body.innerHTML = this.state.editorState.toHTML();
+          window.print();
+          window.location.reload();
+        }
+      }
     ];
     const { editorState } = this.state;
-    // console.log(editorState);
+    // //console.log(editorState);
     return (
       <div className={styles.box}>
          <Modal
@@ -214,13 +232,14 @@ export default class EditorPage extends React.Component {
               onChange={this.type}
             >
               <Radio.Button value="word">Word</Radio.Button>
-              <Radio.Button value="md">Markdown</Radio.Button>
+              {/* <Radio.Button value="md">Markdown</Radio.Button>
               <Radio.Button value="excel">表格</Radio.Button>
               <Radio.Button value="flowSheet">流程图</Radio.Button>
-              <Radio.Button value="mind">思维导图</Radio.Button>
+              <Radio.Button value="mind">思维导图</Radio.Button> */}
             </Radio.Group>
           </div>
         </Modal>
+        <div id='docContent'>
         <BraftEditor
           value={editorState}
           onChange={this.handleEditorChange}
@@ -230,6 +249,8 @@ export default class EditorPage extends React.Component {
           controlBarClassName={styles.controlBar}
           contentClassName={styles.content}
         />
+        </div>
+        
       </div>
     );
   }

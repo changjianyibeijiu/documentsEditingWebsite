@@ -9,7 +9,7 @@ export default class index extends Component {
     super(props);
   }
   render() {
-    console.log(this.props.userName);
+    //console.log(this.props.userName);
     return (
       <div className={styles.list}>
         <div className={styles.name}>{this.props.userName}</div>

@@ -11,7 +11,7 @@ const { confirm } = Modal;
 
 //创建请求实例
 const service = axios.create({
-  baseURL: '/api/',
+  baseURL: 'http://127.0.0.1:7001/api/',
   timeout: 25000,
 });
 
@@ -43,19 +43,21 @@ service.interceptors.request.use(
     return config;
   },
   error => {
-    console.log(error);
+    //console.log(error);
     return Promise.reject(error);
   },
 );
 service.interceptors.response.use(
   response => {
     const data = response.data;
-    console.log(data);
+    //console.log(data);
     if (data.code == '200') {
       //服务器返回200表示正确，否则出错
       switch (data.data.status) {
         case '7004':
-          // openNotificationWithIcon('error', '请登陆账号！');
+          openNotificationWithIcon('error', '请登陆账号！');
+          reMoveToken();
+          history.push('/account/login');
           break;
         case '7000':
           showConfirm();
@@ -78,7 +80,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log(error);
+    //console.log(error);
     openNotificationWithIcon('error', '无网络');
 
     return Promise.reject(error);

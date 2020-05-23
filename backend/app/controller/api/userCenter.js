@@ -17,10 +17,10 @@ class UserCenterController extends Controller {
             ctx
         } = this;
 
-        console.log('保持文件')
+        ////console.log('保持文件')
         const token = this.ctx.request.header.authorization;
         const userId = tokenparse(token, this.ctx.app.config.jwt.secret);
-        // console.log(id);
+        // ////console.log(id);
         const user = userId.slice(9);
         // 获取文件流
         const stream = await this.ctx.getFileStream();
@@ -29,25 +29,25 @@ class UserCenterController extends Controller {
         // 目标文件
         const target = path.join(`../../www/public/${user}`, filename);
         //
-        console.log(target);
+        ////console.log(target);
         createfile(target);
         const writeStream = fs.createWriteStream(target);
-        console.log('-----------获取表单中其它数据 start--------------');
-        console.log(stream.fields);
-        console.log('-----------获取表单中其它数据 end--------------');
+        ////console.log('-----------获取表单中其它数据 start--------------');
+        ////console.log(stream.fields);
+        ////console.log('-----------获取表单中其它数据 end--------------');
         try {
             //异步把文件流 写入
-            console.log('正在写入')
+            ////console.log('正在写入')
             await awaitWriteStream(stream.pipe(writeStream));
-            console.log("写入成功")
+            ////console.log("写入成功")
 
             await this.ctx.model.User.findByIdAndUpdate(userId, {
                 avatar: `http://www.xiaomili.plus/public/${user}/${filename}`
             }, function (err, res) {
                 if (err) {
-                    console.log("Error:" + err);
+                    ////console.log("Error:" + err);
                 } else {
-                    console.log("Res:" + res);
+                    ////console.log("Res:" + res);
                     ctx.body = {
                         code: '200',
                         data: {
@@ -63,7 +63,7 @@ class UserCenterController extends Controller {
             //如果出现错误，关闭管道
             await sendToWormhole(stream);
             // 自定义方法
-            console.log('写入失败')
+            ////console.log('写入失败')
             ctx.body = {
                 code: '200',
                 data: {
@@ -79,17 +79,17 @@ class UserCenterController extends Controller {
             ctx
         } = this;
         const data = ctx.request.body;
-        console.log(data);
+        ////console.log(data);
         const token = this.ctx.request.header.authorization;
         const userId = tokenparse(token, this.ctx.app.config.jwt.secret);
-        // console.log(id);
+        // ////console.log(id);
         if (data.userName && data.userEmail) {
 
 
             await ctx.model.User.findOne({
                 userEmail: ctx.request.body.userEmail
             }).then(async person => {
-                // console.log(person);
+                // ////console.log(person);
                 if (person) {
                     const json = {
                         code: '200',
@@ -99,12 +99,12 @@ class UserCenterController extends Controller {
                         }
                     };
                     ctx.body = json;
-                    //   console.log('邮箱已被注册');
+                    //   ////console.log('邮箱已被注册');
                 } else {
                     await ctx.model.User.findOne({
                         userName: ctx.request.body.userName
                     }).then(async person => {
-                        // console.log(person);
+                        // ////console.log(person);
                         if (person) {
                             ctx.body = {
                                 code: '200',
@@ -113,7 +113,7 @@ class UserCenterController extends Controller {
                                     message: '用户名已注册'
                                 }
                             };
-                            //   console.log('用户名已被注册');
+                            //   ////console.log('用户名已被注册');
                         } else {
 
                             await this.ctx.model.User.findByIdAndUpdate(userId, {
@@ -121,7 +121,7 @@ class UserCenterController extends Controller {
                                 userEmail: data.userEmail,
                             }, function (err, res) {
                                 if (err) {
-                                    console.log("Error:" + err);
+                                    ////console.log("Error:" + err);
                                     ctx.body = {
                                         code: '200',
                                         data: {
@@ -130,7 +130,7 @@ class UserCenterController extends Controller {
                                         }
                                     }
                                 } else {
-                                    console.log("Res:" + res);
+                                    ////console.log("Res:" + res);
                                     ctx.body = {
                                         code: '200',
                                         data: {
@@ -171,16 +171,16 @@ class UserCenterController extends Controller {
             ctx
         } = this;
         const data = ctx.request.body;
-        console.log(data);
+        ////console.log(data);
         const token = this.ctx.request.header.authorization;
         const userId = tokenparse(token, this.ctx.app.config.jwt.secret);
-        // console.log(id);
+        // ////console.log(id);
         if (data.password.length >= 6) {
             await this.ctx.model.User.findByIdAndUpdate(userId, {
                 password: data.password
             }, function (err, res) {
                 if (err) {
-                    console.log("Error:" + err);
+                    ////console.log("Error:" + err);
                     ctx.body = {
                         code: '200',
                         data: {
@@ -189,7 +189,7 @@ class UserCenterController extends Controller {
                         }
                     }
                 } else {
-                    console.log("Res:" + res);
+                    ////console.log("Res:" + res);
                     ctx.body = {
                         code: '200',
                         data: {

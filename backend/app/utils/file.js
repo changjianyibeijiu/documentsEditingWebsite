@@ -17,17 +17,17 @@ async function create(str) {
     if (bln == false) {
       if (i < len - 1) {
         // 一定是文件夹
-        console.log("计划创建 " + filename + " 文件夹");
+        //console.log("计划创建 " + filename + " 文件夹");
         await fs.mkdirSync(filename);
       } else {
         // 判断是文件还是文件夹
         if (arr[i].indexOf(".") > -1) {
           // 如果是文件
-          console.log("创建文件" + filename);
+          //console.log("创建文件" + filename);
           await fs.writeFileSync(filename);
         } else {
           // 如果是文件夹
-          console.log("创建文件夹" + filename);
+          //console.log("创建文件夹" + filename);
           await fs.mkdirSync(filename);
         }
       }

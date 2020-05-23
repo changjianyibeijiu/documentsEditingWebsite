@@ -24,6 +24,9 @@ export default class InfiniteListExample extends React.Component {
         if (response.data.status == 'ok') {
           message.success('已取消分享');
         }
+        if(response){
+          message.success(response.data.message);
+        }
         this.fetchData(res => {
           this.setState({
             data: res.data.data,
@@ -39,6 +42,12 @@ export default class InfiniteListExample extends React.Component {
       history.push(`/edit/mind/${id}`);
     } else if (type == 'md') {
       history.push(`/edit/md/${id}`);
+    }else if (type == 'flow') {
+      history.push(`/edit/flow/${id}`);
+    }else if (type == 'koni') {
+      history.push(`/edit/koni/${id}`);
+    }else if (type == 'excel') {
+      history.push(`/edit/excel/${id}`);
     }
   }
 

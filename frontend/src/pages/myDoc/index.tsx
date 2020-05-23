@@ -24,6 +24,9 @@ export default class InfiniteListExample extends React.Component {
         if (response.data.status == 'ok') {
           message.success('已取消分享');
         }
+        if(response){
+          message.success(response.data.message);
+        }
         this.fetchData(res => {
           this.setState({
             data: res.data.data,
@@ -38,6 +41,9 @@ export default class InfiniteListExample extends React.Component {
         if (response.data.status == 'ok') {
           message.success('已分享文档');
         }
+        if(response){
+          message.success(response.data.message);
+        }
       });
   }
   edit(id, type) {
@@ -47,13 +53,22 @@ export default class InfiniteListExample extends React.Component {
       history.push(`/edit/mind/${id}`);
     } else if (type == 'md') {
       history.push(`/edit/md/${id}`);
+    }else if (type == 'flow') {
+      history.push(`/edit/flow/${id}`);
+    }else if (type == 'koni') {
+      history.push(`/edit/koni/${id}`);
+    }else if (type == 'excel') {
+      history.push(`/edit/excel/${id}`);
     }
   }
   delete(id, folderId) {
     request
       .post('/delete', { data: { id: id, folderId: folderId } })
       .then(response => {
-        console.log(response.data);
+        if(response){
+          message.success(response.data.message);
+        }
+        //console.log(response.data);
         this.fetchData(res => {
           this.setState({
             data: res.data.data,

@@ -14,7 +14,7 @@ class UserController extends Controller {
     await ctx.model.User.findById({
       _id: userId,
     }).then(async (person) => {
-      // console.log(person);
+      // ////console.log(person);
       let json = {
         code: "200",
         data: {
@@ -33,7 +33,7 @@ class UserController extends Controller {
     const {
       ctx
     } = this;
-    // console.log(ctx.query.results);
+    // ////console.log(ctx.query.results);
 
     const token = ctx.request.header.authorization;
     const userId = tokenparse(token, ctx.app.config.jwt.secret);
@@ -41,7 +41,7 @@ class UserController extends Controller {
     await ctx.model.User.findById({
       _id: userId,
     }).then(async (person) => {
-      // console.log(person);
+      // ////console.log(person);
 
       let arr = [];
 
@@ -113,7 +113,7 @@ class UserController extends Controller {
     const {
       ctx
     } = this;
-    // console.log(ctx.query.results);
+    // ////console.log(ctx.query.results);
 
     const token = ctx.request.header.authorization;
     const userId = tokenparse(token, ctx.app.config.jwt.secret);
@@ -121,13 +121,13 @@ class UserController extends Controller {
     await ctx.model.User.findById({
       _id: userId,
     }).then(async (person) => {
-      // console.log(person);
-      // console.log(person);
+      // ////console.log(person);
+      // ////console.log(person);
       let arr = [];
 
       // let docList = [];
       // let folderDoc = person.folder.filter((item) => {
-      //   console.log(item);
+      //   ////console.log(item);
       //   return item.delete == false;
       // }).map(item=>{
       //   docList.concat(item.doc);
@@ -147,11 +147,11 @@ class UserController extends Controller {
       let folderDoc=[];
       person.folder
         .filter((item) => {
-          // console.log(item);
+          // ////console.log(item);
           return item.delete == false && item.rm == false;
         })
         .map((item) => {
-          // console.log(item);
+          // ////console.log(item);
           item.doc
             .filter((doc) => doc.delete == false && item.rm == false)
             .map((doc) => {
@@ -168,23 +168,23 @@ class UserController extends Controller {
             })
         })
 
-      // console.log(folderDoc);
-      console.log("folderDoc");
-      console.log(folderDoc);
+      // ////console.log(folderDoc);
+      ////console.log("folderDoc");
+      ////console.log(folderDoc);
       // let docList = [];
       // folderDoc.map((item) => {
       //   docList.concat(item);
       // });
 
-      // console.log('docList');
-      // console.log(docList);
+      // ////console.log('docList');
+      // ////console.log(docList);
       let doc = person.doc
         .filter((item) => {
-          // console.log(item);
+          // ////console.log(item);
           return item.delete == false && item.rm == false;
         })
         .map((item) => {
-          // console.log(item);
+          // ////console.log(item);
           return {
             name: item.name,
             icon: item.icon,
@@ -196,13 +196,13 @@ class UserController extends Controller {
           };
         });
 
-      // console.log(doc);
+      // ////console.log(doc);
       arr = arr.concat(folderDoc, doc);
       arr = arr.sort(function (a, b) {
         return Number(b.editTime) - Number(a.editTime);
       });
 
-      // console.log(arr);
+      // ////console.log(arr);
       let json = {
         code: "200",
         messege: "数据获取成功",
@@ -222,7 +222,7 @@ class UserController extends Controller {
     const {
       ctx
     } = this;
-    console.log(ctx.query.results);
+    ////console.log(ctx.query.results);
 
     const token = ctx.request.header.authorization;
     const userId = tokenparse(token, ctx.app.config.jwt.secret);
@@ -300,16 +300,16 @@ class UserController extends Controller {
     const {
       ctx
     } = this;
-    console.log(ctx.query.results);
+    ////console.log(ctx.query.results);
 
     const token = ctx.request.header.authorization;
     const id = tokenparse(token, ctx.app.config.jwt.secret);
-    console.log(id);
+    ////console.log(id);
 
     await ctx.model.User.findById({
       _id: id,
     }).then(async (person) => {
-      // console.log(person);
+      // ////console.log(person);
 
       let arr = [];
 
@@ -381,7 +381,7 @@ class UserController extends Controller {
     const {
       ctx
     } = this;
-    console.log("查找");
+    ////console.log("查找");
 
     const token = ctx.request.header.authorization;
     const userId = tokenparse(token, ctx.app.config.jwt.secret);
@@ -389,7 +389,7 @@ class UserController extends Controller {
     await ctx.model.User.find()
       .select("userName avatar userEmail doc folder")
       .then((data) => {
-        console.log(data);
+        ////console.log(data);
 
         let arr = [];
         data
@@ -434,18 +434,18 @@ class UserController extends Controller {
               );
           })
           .map((item) => {
-            console.log(item);
+            ////console.log(item);
             arr = arr.concat(item);
-            console.log("arr");
-            console.log(arr);
+            ////console.log("arr");
+            ////console.log(arr);
           });
-        // console.log(data);
-        console.log(arr);
+        // ////console.log(data);
+        ////console.log(arr);
         arr = arr.sort(function (a, b) {
           return Number(b.editTime) - Number(a.editTime);
         });
-        // console.log(data[0].doc);
-        // console.log(data[0].folder);
+        // ////console.log(data[0].doc);
+        // ////console.log(data[0].folder);
         let json = {
           code: "200",
           messege: "数据获取成功",

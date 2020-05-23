@@ -12,7 +12,7 @@ class LoginController extends Controller {
     const password = ctx.request.body.values.password;
 
     if (isEmail(user)) {
-      console.log("isEmali");
+      ////console.log("isEmali");
       await ctx.model.User.findOne({
         userEmail: user,
       }).then((person) => {
@@ -30,7 +30,7 @@ class LoginController extends Controller {
             );
             ctx.set("authorization", token);
             ctx.set("Access-Control-Expose-Headers", "authorization");
-            console.log("登录成功");
+            ////console.log("登录成功");
             ctx.body = {
               code: "200",
               data: {
@@ -61,7 +61,7 @@ class LoginController extends Controller {
         }
       });
     } else {
-      console.log("isname");
+      ////console.log("isname");
       await ctx.model.User.findOne({
         userName: user,
       }).then((person) => {

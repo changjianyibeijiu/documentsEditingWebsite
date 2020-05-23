@@ -9,7 +9,7 @@ class UserController extends Controller {
     const {
       ctx
     } = this;
-    console.log("查找");
+    ////console.log("查找");
 
     const token = ctx.request.header.authorization;
     const userId = tokenparse(token, ctx.app.config.jwt.secret);
@@ -18,7 +18,7 @@ class UserController extends Controller {
     await ctx.model.User.find()
       .select("userName avatar userEmail doc folder")
       .then((data) => {
-        console.log(data);
+        ////console.log(data);
 
         let arr = [];
         data
@@ -63,13 +63,13 @@ class UserController extends Controller {
               );
           })
           .map((item) => {
-            console.log(item);
+            ////console.log(item);
             arr = arr.concat(item);
-            // console.log("arr");
-            // console.log(arr);
+            // ////console.log("arr");
+            // ////console.log(arr);
           });
-        // console.log(data);
-        // console.log(arr);
+        // ////console.log(data);
+        // ////console.log(arr);
         arr = arr.sort(function (a, b) {
           return Number(b.editTime) - Number(a.editTime);
         });
@@ -77,9 +77,9 @@ class UserController extends Controller {
         arr = arr.filter(item=>{
           return item.name.search(searchData)!=-1;
         });
-        console.log(arr);
-        // console.log(data[0].doc);
-        // console.log(data[0].folder);
+        ////console.log(arr);
+        // ////console.log(data[0].doc);
+        // ////console.log(data[0].folder);
         let json = {
           code: "200",
           messege: "数据获取成功",

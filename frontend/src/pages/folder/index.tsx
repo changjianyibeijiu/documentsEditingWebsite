@@ -30,6 +30,9 @@ export default class InfiniteListExample extends React.Component {
         if (response.data.status == 'ok') {
           message.success('已分享文档');
         }
+        if(response){
+          message.success(response.data.message);
+        }
       });
   }
   edit(foldrId, id, type) {
@@ -39,6 +42,12 @@ export default class InfiniteListExample extends React.Component {
       history.push(`/edit/mind/${foldrId}/${id}`);
     } else if (type == 'md') {
       history.push(`/edit/md/${foldrId}/${id}`);
+    }else if (type == 'flow') {
+      history.push(`/edit/flow/${foldrId}/${id}`);
+    }else if (type == 'koni') {
+      history.push(`/edit/koni/${foldrId}/${id}`);
+    }else if (type == 'excel') {
+      history.push(`/edit/excel/${foldrId}/${id}`);
     }
   }
   delete(id, folderId) {
@@ -48,6 +57,10 @@ export default class InfiniteListExample extends React.Component {
         if (response.data.status == 'ok') {
           message.success('已删除文档');
         }
+        if(response){
+          message.success(response.data.message);
+        }
+    
       });
   }
 
@@ -101,11 +114,11 @@ export default class InfiniteListExample extends React.Component {
   };
 
   handleOk = e => {
-    // console.log(e);
+    // //console.log(e);
     this.setState({
       visible: false,
     });
-    console.log('关闭');
+    //console.log('关闭');
 
     let data = {
       content: '',
@@ -124,10 +137,13 @@ export default class InfiniteListExample extends React.Component {
       })
       .then(response => {
         let result = response.data.data;
-        console.log(result);
-        // console.log(this.state.data);
+        if(response){
+          message.success(response.data.message);
+        }
+        //console.log(result);
+        // //console.log(this.state.data);
         // let arr = this.state.data.unshift({...result});
-        // console.log(arr);
+        // //console.log(arr);
         // this.setState({data:[...arr]});
         this.fetchData(
           res => {
@@ -142,17 +158,17 @@ export default class InfiniteListExample extends React.Component {
   };
 
   handleCancel = e => {
-    console.log(e);
+    //console.log(e);
     this.setState({
       visible: false,
     });
   };
 
   inputChange = e => {
-    console.log('input change');
-    console.log(e.target.value);
+    //console.log('input change');
+    //console.log(e.target.value);
     this.setState({ name: e.target.value });
-    // console.log(this.state.folderName);
+    // //console.log(this.state.folderName);
   };
 
   type = e => {
@@ -183,8 +199,8 @@ export default class InfiniteListExample extends React.Component {
             >
               <Radio.Button value="word">Word</Radio.Button>
               <Radio.Button value="md">Markdown</Radio.Button>
-              <Radio.Button value="excel">表格</Radio.Button>
-              <Radio.Button value="flowSheet">流程图</Radio.Button>
+              <Radio.Button value="koni">拓扑图</Radio.Button>
+              <Radio.Button value="flow">流程图</Radio.Button>
               <Radio.Button value="mind">思维导图</Radio.Button>
             </Radio.Group>
           </div>
