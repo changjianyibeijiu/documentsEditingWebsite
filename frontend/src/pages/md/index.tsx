@@ -240,6 +240,15 @@ export default class MdEditorClass extends React.Component {
   };
 
   async componentDidMount() {
+    cid = '';
+
+    cfolderId = '';
+
+    name = '';
+
+    createTime='';
+
+    editTime='';
     document.title = 'Markdown-'+name;
 
     // //console.log(this.props.match);
