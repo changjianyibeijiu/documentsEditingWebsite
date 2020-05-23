@@ -21,11 +21,11 @@ export default class InfiniteListExample extends React.Component {
     request
       .post(`/restore`, { data: { id: id, folderId: folderId } })
       .then(response => {
-        if (response.data.status == 'ok') {
-          message.success('已还原');
-        }
+        // if (response.data.status == 'ok') {
+        //   message.success('已还原');
+        // }
         if(response){
-          message.success(response.data.message);
+          message.success(response.data.data.message);
         }
         this.fetchData(res => {
           this.setState({
@@ -39,11 +39,11 @@ export default class InfiniteListExample extends React.Component {
     request
       .post('/rm', { data: { id: id, folderId: folderId } })
       .then(response => {
-        if (response.data.status == 'ok') {
-          message.success('已删除');
-        }
+        // if (response.data.status == 'ok') {
+        //   message.success('已删除');
+        // }
         if(response){
-          message.success(response.data.message);
+          message.success(response.data.data.message);
         }
         this.fetchData(res => {
           this.setState({
@@ -54,6 +54,8 @@ export default class InfiniteListExample extends React.Component {
   }
 
   componentDidMount() {
+    document.title = '回收站';
+
     this.fetchData(res => {
       this.setState({
         data: res.data.data,

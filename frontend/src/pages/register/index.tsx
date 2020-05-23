@@ -21,6 +21,10 @@ export default class index extends Component {
     this.state = { umessage: '', emessage: '', tmessage: '' };
   }
 
+  componentDidMount(){
+    document.title = '用户注册';
+
+  }
   showConfirm = () => {
     confirm({
       title: '注册成功，立即登陆？',

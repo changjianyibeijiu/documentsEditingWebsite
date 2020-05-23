@@ -107,13 +107,14 @@ class Save extends PluginComponent<CounterState> {
       //   folderId: this.state.folderId?this.state.folderId:result.folderId ? result.folderId : '',
       //   savebutton: 'disabled',
       // });
+      console.log(result)
       if(result){
         message.success(result.message);
       }
   
 
       cid = cid ? cid : result.id;
-      cfolderId = cfolderId ? cfolderId : result.folderId;
+      cfolderId = cfolderId ? cfolderId : result.folderId?result.folderId:'';
     }
   }
 
@@ -239,6 +240,8 @@ export default class MdEditorClass extends React.Component {
   };
 
   async componentDidMount() {
+    document.title = 'Markdown-'+name;
+
     // //console.log(this.props.match);
     // 假设此处从服务端获取html格式的编辑器内容
     // //console.log("docid");

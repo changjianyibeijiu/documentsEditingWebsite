@@ -122,6 +122,8 @@ export default class index extends Component {
   };
 
   componentDidMount() {
+    document.title = '用户中心';
+
     //console.log('以加载');
     request.get('/currentUser').then(response => {
       this.setState({

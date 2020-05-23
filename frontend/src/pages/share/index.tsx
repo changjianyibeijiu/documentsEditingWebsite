@@ -21,11 +21,11 @@ export default class InfiniteListExample extends React.Component {
     request
       .post(`/unshare`, { data: { id: id, folderId: folderId } })
       .then(response => {
-        if (response.data.status == 'ok') {
-          message.success('已取消分享');
-        }
+        // if (response.data.status == 'ok') {
+        //   message.success('已取消分享');
+        // }
         if(response){
-          message.success(response.data.message);
+          message.success(response.data.data.message);
         }
         this.fetchData(res => {
           this.setState({
@@ -52,6 +52,8 @@ export default class InfiniteListExample extends React.Component {
   }
 
   componentDidMount() {
+    document.title = '分享';
+
     this.fetchData(res => {
       this.setState({
         data: res.data.data,

@@ -59,6 +59,8 @@ export default class  extends Component {
 
 
   async componentDidMount() {
+    document.title = '拓扑图-'+this.state.name;
+
     // //console.log(this.props.match);
     // 假设此处从服务端获取html格式的编辑器内容
     // //console.log("docid");

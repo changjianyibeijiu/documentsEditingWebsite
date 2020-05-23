@@ -21,6 +21,8 @@ export default class InfiniteListExample extends React.Component {
   };
 
   componentDidMount() {
+    document.title = '文档搜索';
+
     //console.log(this.props.location.query)
     if(this.props.location.query.search){
       this.searchData(res=>{

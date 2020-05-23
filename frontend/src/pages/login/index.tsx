@@ -13,6 +13,10 @@ export default class index extends Component {
     this.state = { message: '' };
   }
 
+  componentDidMount(){
+    document.title = '用户登陆';
+
+  }
   onFinish = values => {
     //console.log('Received values of form: ', values);
     request.post('/login', { values }).then(response => {

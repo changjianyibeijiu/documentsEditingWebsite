@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import styles from './index.less';
 export default class index extends Component {
+  componentDidMount(){
+    document.title = '帮助页面';
+
+  }
   render() {
     return (
       <div className={styles.box}>

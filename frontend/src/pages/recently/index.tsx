@@ -21,11 +21,11 @@ export default class InfiniteListExample extends React.Component {
     request
       .post(`/share`, { data: { id: id, folderId: folderId } })
       .then(response => {
-        if (response.data.status == 'ok') {
-          message.success('已分享文档');
-        }
+        // if (response.data.status == 'ok') {
+        //   message.success('已分享文档');
+        // }
         if(response){
-          message.success(response.data.message);
+          message.success(response.data.data.message);
         }
       });
   }
@@ -34,11 +34,11 @@ export default class InfiniteListExample extends React.Component {
     request
       .post(`/unshare`, { data: { id: id, folderId: folderId } })
       .then(response => {
-        if (response.data.status == 'ok') {
-          message.success('已取消分享');
-        }
+        // if (response.data.status == 'ok') {
+        //   message.success('已取消分享');
+        // }
         if(response){
-          message.success(response.data.message);
+          message.success(response.data.data.message);
         }
         this.fetchData(res => {
           this.setState({
@@ -103,11 +103,11 @@ export default class InfiniteListExample extends React.Component {
     request
       .post('/delete', { data: { id: id, folderId: folderId } })
       .then(response => {
-        if (response.data.status == 'ok') {
-          message.success('已删除文档');
-        }
+        // if (response.data.status == 'ok') {
+        //   message.success('已删除文档');
+        // }
         if(response){
-          message.success(response.data.message);
+          message.success(response.data.data.message);
         }
         this.fetchData(res => {
           this.setState({
@@ -118,6 +118,8 @@ export default class InfiniteListExample extends React.Component {
   }
 
   componentDidMount() {
+    document.title = '最近文档';
+
     this.fetchData(res => {
       this.setState({
         data: res.data.data,

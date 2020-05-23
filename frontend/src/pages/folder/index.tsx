@@ -27,11 +27,11 @@ export default class InfiniteListExample extends React.Component {
     request
       .post(`/share`, { data: { id: id, folderId: folderId } })
       .then(response => {
-        if (response.data.status == 'ok') {
-          message.success('已分享文档');
-        }
+        // if (response.data.status == 'ok') {
+        //   message.success('已分享文档');
+        // }
         if(response){
-          message.success(response.data.message);
+          message.success(response.data.data.message);
         }
       });
   }
@@ -54,17 +54,19 @@ export default class InfiniteListExample extends React.Component {
     request
       .post('/delete', { data: { id: id, folderId: folderId } })
       .then(response => {
-        if (response.data.status == 'ok') {
-          message.success('已删除文档');
-        }
+        // if (response.data.status == 'ok') {
+        //   message.success('已删除文档');
+        // }
         if(response){
-          message.success(response.data.message);
+          message.success(response.data.data.message);
         }
     
       });
   }
 
   componentDidMount() {
+    document.title = '用户文档';
+
     this.fetchData(
       res => {
         this.setState({

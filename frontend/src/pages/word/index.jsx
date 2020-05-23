@@ -11,7 +11,8 @@ import {
   Form,
   Input,
   Layout,
-  Radio
+  Radio,
+  message
 } from 'antd';
 
 import request from '@/utils/request';
@@ -70,7 +71,7 @@ export default class EditorPage extends React.Component {
     // //console.log("docid");
     //console.log(this.props.match.params.id);
     //console.log(this.props.match.params.folderId);
-
+    document.title = '富文本编辑-'+this.state.name;
     const id = this.props.match.params.id ? this.props.match.params.id : false;
     const folderId = this.props.match.params.folderId
       ? this.props.match.params.folderId
@@ -143,6 +144,7 @@ export default class EditorPage extends React.Component {
     //console.log(result);
 
     if(result){
+      console.log(result);
       message.success(result.message);
     }
 

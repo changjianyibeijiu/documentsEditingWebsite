@@ -38,6 +38,8 @@ export default class EditorPage extends React.Component {
   };
 
   async componentDidMount() {
+    document.title = '预览-'+this.state.type;
+
     const id = this.props.match.params.id;
     //console.log(this.props.match.params.folderId);
     const folderId = this.props.match.params.folderId

@@ -46,7 +46,7 @@ module.exports = appInfo => {
         // clientId, access the client instance by app.mongooseDB.get('clientId')
         db1: {
           // url: 'mongodb+srv://root:root@cluster0-okmkn.azure.mongodb.net/file?retryWrites=true&w=majority',
-          url: 'mongodb+srv://root:root@cluster0-alhg6.mongodb.net/edtionweb?retryWrites=true&w=majority',
+          url: 'mongodb+srv://root:root@cluster0-alhg6.mongodb.net/test?retryWrites=true&w=majority',
           options: {},
         },
         // db1: {
