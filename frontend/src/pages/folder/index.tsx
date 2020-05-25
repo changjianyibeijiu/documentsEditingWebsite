@@ -21,6 +21,8 @@ export default class InfiniteListExample extends React.Component {
       : false,
     type: 'word',
     name: '新建文件',
+    userName: this.props.match.params.userName? this.props.match.params.userName
+    : false,
   };
 
   share(id, folderId) {
@@ -65,6 +67,8 @@ export default class InfiniteListExample extends React.Component {
   }
 
   componentDidMount() {
+    // console.log(this.state.userName);
+    // console.log(this.props.match.params.userName)
     document.title = '用户文档';
 
     this.fetchData(
@@ -75,14 +79,24 @@ export default class InfiniteListExample extends React.Component {
       },
       this.state.time,
       this.state.folderId,
+      this.state.userName
     );
   }
 
-  fetchData = (callback, time, folderId) => {
-    request
+  fetchData = (callback, time, folderId,userName) => {
+    if(this.state.userName){    request
+      .get('/folder?folderId=' + folderId + '&results=20&time=' + time+'&userName='+this.state.userName)
+      .then(callback);
+    this.setState({ time: ++this.state.time });
+
+    }
+    else{
+      request
       .get('/folder?folderId=' + folderId + '&results=20&time=' + time)
       .then(callback);
     this.setState({ time: ++this.state.time });
+    }
+
   };
 
   handleInfiniteOnLoad = () => {
@@ -108,6 +122,7 @@ export default class InfiniteListExample extends React.Component {
       },
       this.state.time,
       this.state.folderId,
+      this.state.userName
     );
   };
 
@@ -140,7 +155,7 @@ export default class InfiniteListExample extends React.Component {
       .then(response => {
         let result = response.data.data;
         if(response){
-          message.success(response.data.message);
+          message.success(response.data.data.message);
         }
         //console.log(result);
         // //console.log(this.state.data);
@@ -155,6 +170,7 @@ export default class InfiniteListExample extends React.Component {
           },
           1,
           this.state.folderId,
+          this.state.userName
         );
       });
   };
@@ -237,7 +253,7 @@ export default class InfiniteListExample extends React.Component {
                         onClick={() => {
                           // this.preview(this.state.folderId, item.id, item.type);
                           history.push(
-                            '/preview/' + this.state.folderId + '/' + item.id,
+                            '/preview/'+this.state.userName +'/'+ this.state.folderId + '/' + item.id,
                           );
                         }}
                       >

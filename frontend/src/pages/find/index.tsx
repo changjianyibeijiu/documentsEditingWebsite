@@ -118,13 +118,13 @@ export default class InfiniteListExample extends React.Component {
                         key="option"
                         onClick={() => {
                           // this.preview(item.id, item.type);
-                          history.push('/preview/' + item.id);
+                          history.push('/preview/' +item.userName+'/'+ item.id);
                         }}
                       >
                         {item.name}
                       </span>
                     ) : (
-                      <Link to={'/share/folder/' + item.folderId}>
+                      <Link to={'/share/'+item.userName+'/folder/' + item.folderId}>
                         {item.name}
                       </Link>
                     )

@@ -79,10 +79,10 @@ export default defineConfig({
 
                 { path: '/share', component: '@/pages/share/index' },
 
-                { path: '/share/:folder/:folderId', component: '@/pages/folder/index'},
+                { path: '/share/:userName/:folder/:folderId', component: '@/pages/folder/index'},
 
-                { path: '/preview/:id', component: '@/pages/preview/index' },
-                { path: '/preview/:folderId/:id', component: '@/pages/preview/index' },
+                { path: '/preview/:userName/:id', component: '@/pages/preview/index' },
+                { path: '/preview/:userName/:folderId/:id', component: '@/pages/preview/index' },
 
 
                 { path: '/find', component: '@/pages/find/index' },

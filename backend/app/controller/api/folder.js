@@ -125,55 +125,115 @@ class FolderController extends Controller {
     const token = ctx.request.header.authorization;
     const userId = tokenparse(token, ctx.app.config.jwt.secret);
 
+    if(ctx.query.userName){
 
-    await ctx.model.User.findById({
-      _id: userId
-    }).then(async person => {
-      // ////console.log(person);
-
-      for (let i = 0; i < person.folder.length; i++) {
-        if (person.folder[i]._id == ctx.query.folderId) {
-          ////console.log("找到文件夹");
-          let doc = person.folder[i].doc.filter((item) => {
-            return item.delete == false;
-          }).map((item) => {
-            return {
-              name: item.name,
-              icon: item.icon,
-              id: item._id,
-              createTime: item.createTime,
-              editTime: item.editTime,
-              share: item.share,
-              type: item.type
+      await ctx.model.User.findOne({
+        userName:ctx.query.userName
+      }).then(async person => {
+        // ////console.log(person);
+  
+  
+        for (let i = 0; i < person.folder.length; i++) {
+          if (person.folder[i]._id == ctx.query.folderId) {
+            ////console.log("找到文件夹");
+            let doc = person.folder[i].doc.filter((item) => {
+              return item.delete == false;
+            }).map((item) => {
+              return {
+                name: item.name,
+                icon: item.icon,
+                id: item._id,
+                createTime: item.createTime,
+                editTime: item.editTime,
+                share: item.share,
+                type: item.type
+              }
+            }).reverse();
+  
+            ////console.log("doc");
+            ////console.log(doc);
+            let json = {
+              code: '200',
+              messege: '数据获取成功',
+  
+              data: [...doc.slice(ctx.query.results * ctx.query.time - ctx.query.results, ctx.query.results * ctx.query.time)]
+  
             }
-          }).reverse();
-
-          ////console.log("doc");
-          ////console.log(doc);
-          let json = {
-            code: '200',
-            messege: '数据获取成功',
-
-            data: [...doc.slice(ctx.query.results * ctx.query.time - ctx.query.results, ctx.query.results * ctx.query.time)]
-
+            ctx.body = json;
+            break;
+  
+          } else {
+            ctx.body = {
+              code: "200",
+              message: "无此文件夹",
+  
+              data: []
+            };
           }
-          ctx.body = json;
-          break;
-
-        } else {
-          ctx.body = {
-            code: "200",
-            message: "无此文件夹",
-
-            data: []
-          };
         }
-      }
+  
+  
+  
+  
+      })
 
+    }
 
+    else{
+      
 
+      await ctx.model.User.findById({
+        _id: userId
+      }).then(async person => {
+        // ////console.log(person);
+  
+  
+  
+        for (let i = 0; i < person.folder.length; i++) {
+          if (person.folder[i]._id == ctx.query.folderId) {
+            ////console.log("找到文件夹");
+            let doc = person.folder[i].doc.filter((item) => {
+              return item.delete == false;
+            }).map((item) => {
+              return {
+                name: item.name,
+                icon: item.icon,
+                id: item._id,
+                createTime: item.createTime,
+                editTime: item.editTime,
+                share: item.share,
+                type: item.type
+              }
+            }).reverse();
+  
+            ////console.log("doc");
+            ////console.log(doc);
+            let json = {
+              code: '200',
+              messege: '数据获取成功',
+  
+              data: [...doc.slice(ctx.query.results * ctx.query.time - ctx.query.results, ctx.query.results * ctx.query.time)]
+  
+            }
+            ctx.body = json;
+            break;
+  
+          } else {
+            ctx.body = {
+              code: "200",
+              message: "无此文件夹",
+  
+              data: []
+            };
+          }
+        }
+  
+  
+  
+  
+      })
+    }
 
-    })
   }
 }
 

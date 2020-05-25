@@ -20,9 +20,9 @@ import 'react-markdown-editor-lite/lib/index.css';
 // Initialize a markdown parser
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-async function fetchEditorContent(id, folderId) {
+async function fetchEditorContent(id, folderId,userName) {
   let data = {};
-  await request.get(`/file?id=${id}&folderId=${folderId}`).then(response => {
+  await request.get(`/file?id=${id}&folderId=${folderId}&userName=${userName}`).then(response => {
     data = response.data.data;
   });
   // //console.log(`find file ${data}`);
@@ -41,12 +41,14 @@ export default class EditorPage extends React.Component {
     document.title = '预览-'+this.state.type;
 
     const id = this.props.match.params.id;
+    const userName = this.props.match.params.userName;
+    // console.log(userName);
     //console.log(this.props.match.params.folderId);
     const folderId = this.props.match.params.folderId
       ? this.props.match.params.folderId
       : false;
 
-    let data = await fetchEditorContent(id, folderId);
+    let data = await fetchEditorContent(id, folderId,userName);
 
     if (data.type == 'word') {
       //console.log('word类型文档')

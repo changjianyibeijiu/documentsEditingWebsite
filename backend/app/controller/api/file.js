@@ -302,96 +302,186 @@ class FileController extends Controller {
     } = this;
     const id = ctx.query.id;
     const folderId = ctx.query.folderId;
+    const userName = ctx.query.userName;
 
     ////console.log(ctx.query);
 
     const token = ctx.request.header.authorization;
     const userId = tokenparse(token, app.config.jwt.secret);
 
-    await ctx.model.User.findOne({
-      _id: userId,
-    }).then(
-      async (person) => {
-          if (folderId != 'false') {
-            ////console.log('folderId:' + folderId);
-            for (let i = 0; i < person.folder.length; i++) {
-              if (person.folder[i]._id == folderId) {
-                for (let x = 0; x < person.folder[i].doc.length; x++) {
-                  if (person.folder[i].doc[x]._id == id) {
-                    let filepath = person.folder[i].doc[x].path;
-                    var data = fs.readFileSync(filepath);
-                    ////console.log("同步读取: " + data.toString());
-                    ctx.body = {
-                      code: "200",
-                      data: {
-                        content: data.toString(),
-                        message: "读取成功",
-                        name: person.folder[i].doc[x].name,
-                        id: person.folder[i].doc[x]._id,
-                        createTime: person.folder[i].doc[x].createTime,
-                        folderId: person.folder[i]._id,
-                        type: person.folder[i].doc[x].type,
-                      },
-                    };
-                    break;
-                  } else {
-                    ctx.body = {
-                      code: "200",
-                      data: {
-                        message: "读取失败",
-                      },
-                    };
+    if(userName){
+      await ctx.model.User.findOne({
+        userName:userName
+      }).then(
+        async (person) => {
+            if (folderId != 'false') {
+              ////console.log('folderId:' + folderId);
+              for (let i = 0; i < person.folder.length; i++) {
+                if (person.folder[i]._id == folderId) {
+                  for (let x = 0; x < person.folder[i].doc.length; x++) {
+                    if (person.folder[i].doc[x]._id == id) {
+                      let filepath = person.folder[i].doc[x].path;
+                      var data = fs.readFileSync(filepath);
+                      ////console.log("同步读取: " + data.toString());
+                      ctx.body = {
+                        code: "200",
+                        data: {
+                          content: data.toString(),
+                          message: "读取成功",
+                          name: person.folder[i].doc[x].name,
+                          id: person.folder[i].doc[x]._id,
+                          createTime: person.folder[i].doc[x].createTime,
+                          folderId: person.folder[i]._id,
+                          type: person.folder[i].doc[x].type,
+                        },
+                      };
+                      break;
+                    } else {
+                      ctx.body = {
+                        code: "200",
+                        data: {
+                          message: "读取失败",
+                        },
+                      };
+                    }
                   }
+                  break;
+                } else {
+                  ctx.body = {
+                    code: "200",
+                    data: {
+                      message: "读取失败",
+                    },
+                  };
                 }
-                break;
-              } else {
-                ctx.body = {
-                  code: "200",
-                  data: {
-                    message: "读取失败",
-                  },
-                };
+              }
+            } else {
+              for (let x = 0; x < person.doc.length; x++) {
+                if (person.doc[x]._id == id) {
+                  let filepath = person.doc[x].path;
+                  var data = fs.readFileSync(filepath);
+                  ////console.log("同步读取: " + data.toString());
+                  ctx.body = {
+                    code: "200",
+                    data: {
+                      content: data.toString(),
+                      message: "读取成功",
+                      name: person.doc[x].name,
+                      id: person.doc[x]._id,
+                      createTime: person.doc[x].createTime,
+                      type: person.doc[x].type
+  
+                    },
+                  };
+                  break;
+                } else {
+                  ctx.body = {
+                    code: "200",
+                    data: {
+                      message: "读取失败",
+                    },
+                  };
+                }
               }
             }
-          } else {
-            for (let x = 0; x < person.doc.length; x++) {
-              if (person.doc[x]._id == id) {
-                let filepath = person.doc[x].path;
-                var data = fs.readFileSync(filepath);
-                ////console.log("同步读取: " + data.toString());
-                ctx.body = {
-                  code: "200",
-                  data: {
-                    content: data.toString(),
-                    message: "读取成功",
-                    name: person.doc[x].name,
-                    id: person.doc[x]._id,
-                    createTime: person.doc[x].createTime,
-                    type: person.doc[x].type
-
-                  },
-                };
-                break;
-              } else {
-                ctx.body = {
-                  code: "200",
-                  data: {
-                    message: "读取失败",
-                  },
-                };
-              }
-            }
+          },
+          (err) => {
+            ctx.body = {
+              code: "200",
+              data: {
+                message: "读取失败",
+              },
+            };
           }
-        },
-        (err) => {
-          ctx.body = {
-            code: "200",
-            data: {
-              message: "读取失败",
-            },
-          };
-        }
-    );
+      );
+    }
+    else{
+      await ctx.model.User.findOne({
+        _id: userId,
+      }).then(
+        async (person) => {
+            if (folderId != 'false') {
+              ////console.log('folderId:' + folderId);
+              for (let i = 0; i < person.folder.length; i++) {
+                if (person.folder[i]._id == folderId) {
+                  for (let x = 0; x < person.folder[i].doc.length; x++) {
+                    if (person.folder[i].doc[x]._id == id) {
+                      let filepath = person.folder[i].doc[x].path;
+                      var data = fs.readFileSync(filepath);
+                      ////console.log("同步读取: " + data.toString());
+                      ctx.body = {
+                        code: "200",
+                        data: {
+                          content: data.toString(),
+                          message: "读取成功",
+                          name: person.folder[i].doc[x].name,
+                          id: person.folder[i].doc[x]._id,
+                          createTime: person.folder[i].doc[x].createTime,
+                          folderId: person.folder[i]._id,
+                          type: person.folder[i].doc[x].type,
+                        },
+                      };
+                      break;
+                    } else {
+                      ctx.body = {
+                        code: "200",
+                        data: {
+                          message: "读取失败",
+                        },
+                      };
+                    }
+                  }
+                  break;
+                } else {
+                  ctx.body = {
+                    code: "200",
+                    data: {
+                      message: "读取失败",
+                    },
+                  };
+                }
+              }
+            } else {
+              for (let x = 0; x < person.doc.length; x++) {
+                if (person.doc[x]._id == id) {
+                  let filepath = person.doc[x].path;
+                  var data = fs.readFileSync(filepath);
+                  ////console.log("同步读取: " + data.toString());
+                  ctx.body = {
+                    code: "200",
+                    data: {
+                      content: data.toString(),
+                      message: "读取成功",
+                      name: person.doc[x].name,
+                      id: person.doc[x]._id,
+                      createTime: person.doc[x].createTime,
+                      type: person.doc[x].type
+  
+                    },
+                  };
+                  break;
+                } else {
+                  ctx.body = {
+                    code: "200",
+                    data: {
+                      message: "读取失败",
+                    },
+                  };
+                }
+              }
+            }
+          },
+          (err) => {
+            ctx.body = {
+              code: "200",
+              data: {
+                message: "读取失败",
+              },
+            };
+          }
+      );
+    }
+
   }
 
 
